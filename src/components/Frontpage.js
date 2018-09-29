@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Frontpage = () => (
   <div>
@@ -20,7 +21,7 @@ const Frontpage = () => (
       с одной частью, но не согласны с другой. Отвечайте «Нет, я не согласен», если утверждение
       совершенно ложно для вас.
     </p>
-    <a href="/oldham-morris">Начать тестирование</a>
+    <Link to="/oldham-morris">Начать тестирование</Link>
   </div>
 );
 

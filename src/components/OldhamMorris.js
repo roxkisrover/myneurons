@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import findIndex from 'lodash/findIndex';
 import update from 'immutability-helper';
 import Question from './Question';
@@ -54,7 +55,7 @@ class OldhamMorris extends React.Component {
     const max = result.reduce((a, b) => Math.max(a, b));
     const index = result.indexOf(max);
     this.setState({
-      resultLink: typesData[index].link,
+      resultLink: `/oldham-morris${typesData[index].link}`,
       resultType: typesData[index].type,
     });
   }
@@ -76,7 +77,7 @@ class OldhamMorris extends React.Component {
         ))}
         {isTestComplete && (
           <span>
-            Ваш тип: <a href={resultLink}>{resultType}</a>
+            Ваш тип: <Link to={resultLink}>{resultType}</Link>
           </span>
         )}
       </div>
