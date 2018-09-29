@@ -1,3 +1,4 @@
 import React from 'react';
+import Frontpage from './components/Frontpage';
 
-export default () => <h1>myneurons</h1>;
+export default () => <Frontpage />;
