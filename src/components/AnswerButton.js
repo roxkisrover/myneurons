@@ -33,40 +33,36 @@ const Button = styled.button`
 `;
 
 const AnswerButton = ({
-  activeAnswerIndex,
   answerIndex,
   answerText,
   answerValue,
   handleActiveIndexChange,
   handleAnswerClick,
+  isActive,
   questionId,
   questionTarget,
 }) => (
   <Button
-    type="button"
+    isActive={isActive}
     onClick={() => {
       handleAnswerClick(questionId, questionTarget, answerValue);
       handleActiveIndexChange(answerIndex);
     }}
-    isActive={answerIndex === activeAnswerIndex}
+    type="button"
   >
     {answerText}
   </Button>
 );
 
 AnswerButton.propTypes = {
-  activeAnswerIndex: PropTypes.number,
   answerIndex: PropTypes.number.isRequired,
   answerText: PropTypes.string.isRequired,
   answerValue: PropTypes.number.isRequired,
   handleActiveIndexChange: PropTypes.func.isRequired,
   handleAnswerClick: PropTypes.func.isRequired,
+  isActive: PropTypes.bool.isRequired,
   questionId: PropTypes.number.isRequired,
   questionTarget: PropTypes.arrayOf(PropTypes.number).isRequired,
-};
-
-AnswerButton.defaultProps = {
-  activeAnswerIndex: null,
 };
 
 export default AnswerButton;

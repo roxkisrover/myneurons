@@ -40,12 +40,12 @@ class Question extends React.Component {
         </Paragraph>
         {answersData.map((answer, index) => (
           <AnswerButton
-            activeAnswerIndex={activeAnswerIndex}
             answerIndex={index}
             answerText={answer.text}
             answerValue={answer.value}
             handleActiveIndexChange={this.handleActiveIndexChange}
             handleAnswerClick={handleAnswerClick}
+            isActive={index === activeAnswerIndex}
             key={answer.id}
             questionId={questionId}
             questionTarget={questionTarget}
