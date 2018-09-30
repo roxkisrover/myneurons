@@ -56,7 +56,7 @@ const AnswerButton = ({
 );
 
 AnswerButton.propTypes = {
-  activeAnswerIndex: PropTypes.number,
+  // activeAnswerIndex: PropTypes.number,
   answerIndex: PropTypes.number.isRequired,
   answerText: PropTypes.string.isRequired,
   answerValue: PropTypes.number.isRequired,
@@ -67,7 +67,7 @@ AnswerButton.propTypes = {
 };
 
 AnswerButton.defaultProps = {
-  activeAnswerIndex: null,
+  // activeAnswerIndex: null,
 };
 
 export default AnswerButton;
