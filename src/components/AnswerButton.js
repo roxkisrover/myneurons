@@ -6,13 +6,13 @@ const Button = styled.button`
   display: inline-block;
   margin-right: 10px;
   margin-bottom: 10px;
-  height: 28px;
+  height: 24px;
   padding: 0 30px;
   color: ${props => (props.isActive ? '#fff' : '#555')};
   text-align: center;
   font-size: 11px;
   font-weight: 600;
-  line-height: 28px;
+  line-height: 24px;
   letter-spacing: 1px;
   text-transform: uppercase;
   text-decoration: none;
@@ -22,12 +22,12 @@ const Button = styled.button`
   border: ${props => (props.isActive ? '1px solid #33c3f0' : '1px solid #bbb')};
   cursor: pointer;
   box-sizing: border-box;
-
-  :hover,
-  :focus {
+  :hover {
     color: ${props => (props.isActive ? '#fff' : '#333')};
     border-color: ${props => (props.isActive ? '#1eaedb' : '#888')};
     background-color: ${props => (props.isActive ? '#1eaedb' : 'transparent')};
+  }
+  :focus {
     outline: 0;
   }
 `;

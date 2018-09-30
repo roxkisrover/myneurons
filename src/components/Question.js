@@ -9,8 +9,8 @@ const Paragraph = styled.p`
 `;
 
 const Divider = styled.hr`
-  margin-top: 30px;
-  margin-bottom: 35px;
+  margin-top: 20px;
+  margin-bottom: 25px;
   border-width: 0;
   border-top: 1px solid #e1e1e1;
 `;
