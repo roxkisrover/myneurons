@@ -1,6 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import AnswerButton from './AnswerButton';
+
+const Paragraph = styled.p`
+  margin-top: 0;
+  margin-bottom: 25px;
+`;
+
+const Divider = styled.hr`
+  margin-top: 30px;
+  margin-bottom: 35px;
+  border-width: 0;
+  border-top: 1px solid #e1e1e1;
+`;
 
 class Question extends React.Component {
   constructor(props) {
@@ -22,9 +35,9 @@ class Question extends React.Component {
     } = this.props;
     return (
       <div>
-        <p>
+        <Paragraph>
           {questionId}. {questionText}
-        </p>
+        </Paragraph>
         {answersData.map((answer, index) => (
           <AnswerButton
             activeAnswerIndex={activeAnswerIndex}
@@ -38,7 +51,7 @@ class Question extends React.Component {
             questionTarget={questionTarget}
           />
         ))}
-        <hr />
+        <Divider />
       </div>
     );
   }

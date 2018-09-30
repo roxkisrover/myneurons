@@ -1,9 +1,40 @@
 import React from 'react';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import findIndex from 'lodash/findIndex';
 import update from 'immutability-helper';
 import Question from './Question';
 import { questionsData, answersData, typesData } from '../data/oldham-morris';
+
+const Container = styled.div`
+  position: relative;
+  margin: 30px auto;
+  padding: 0 20px;
+  width: 100%;
+  max-width: 960px;
+  box-sizing: border-box;
+
+  @media (min-width: 400px) {
+    width: 85%;
+    padding: 0;
+  }
+  @media (min-width: 550px) {
+    width: 80%;
+  }
+`;
+
+const Title = styled.h1`
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-weight: 300;
+  font-size: 40px;
+  line-height: 1.2;
+  letter-spacing: -1px;
+
+  @media (min-width: 550px) {
+    font-size: 50px;
+  }
+`;
 
 class OldhamMorris extends React.Component {
   constructor(props) {
@@ -63,8 +94,8 @@ class OldhamMorris extends React.Component {
   render() {
     const { isTestComplete, resultLink, resultType } = this.state;
     return (
-      <div>
-        <h1>Тест Олдхэма-Морриса</h1>
+      <Container>
+        <Title>Тест Олдхэма-Морриса</Title>
         {questionsData.map(question => (
           <Question
             answersData={answersData}
@@ -80,7 +111,7 @@ class OldhamMorris extends React.Component {
             Ваш тип: <Link to={resultLink}>{resultType}</Link>
           </span>
         )}
-      </div>
+      </Container>
     );
   }
 }
