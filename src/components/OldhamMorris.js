@@ -4,7 +4,13 @@ import { Link } from 'react-router-dom';
 import findIndex from 'lodash/findIndex';
 import update from 'immutability-helper';
 import Question from './Question';
-import { questionsData, answersData, typesData } from '../data/oldham-morris';
+import {
+  answersData,
+  getMaxIndex,
+  getResultArr,
+  questionsData,
+  typesData,
+} from '../data/oldhamMorris';
 
 const Container = styled.div`
   position: relative;
@@ -36,16 +42,42 @@ const Title = styled.h1`
   }
 `;
 
+const ResultButton = styled.button`
+  display: inline-block;
+  height: 38px;
+  padding: 0 30px;
+  color: #555;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 38px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  background-color: transparent;
+  border-radius: 4px;
+  border: 1px solid #bbb;
+  cursor: pointer;
+  box-sizing: border-box;
+
+  :hover,
+  :focus {
+    color: #333;
+    border-color: #888;
+    outline: 0;
+  }
+`;
+
 class OldhamMorris extends React.Component {
   constructor(props) {
     super(props);
     this.handleAnswerClick = this.handleAnswerClick.bind(this);
+    this.handleResultClick = this.handleResultClick.bind(this);
     this.state = {
       answers: [],
       isTestComplete: false,
-      result: new Array(14).fill(0),
-      resultLink: '/',
-      resultType: '',
+      type: '',
     };
   }
 
@@ -64,35 +96,21 @@ class OldhamMorris extends React.Component {
     }
   }
 
-  checkTestComplete() {
+  handleResultClick() {
     const { answers } = this.state;
     if (answers.length === questionsData.length) {
-      this.setState({ isTestComplete: true });
+      const result = getResultArr(answers);
+      const maxIndex = getMaxIndex(result);
+      const resultType = typesData[maxIndex];
+      this.setState({
+        isTestComplete: true,
+        type: resultType.type,
+      });
     }
   }
 
-  calculateResult() {
-    const { answers, result } = this.state;
-    answers.forEach((answer) => {
-      for (let i = 0; i < answer.target.length; i += 1) {
-        result[answer.target[i]] += answer.value;
-      }
-    });
-    this.setState({ result });
-  }
-
-  createResultLink() {
-    const { result } = this.state;
-    const max = result.reduce((a, b) => Math.max(a, b));
-    const index = result.indexOf(max);
-    this.setState({
-      resultLink: `/oldham-morris${typesData[index].link}`,
-      resultType: typesData[index].type,
-    });
-  }
-
   render() {
-    const { isTestComplete, resultLink, resultType } = this.state;
+    const { isTestComplete, type } = this.state;
     return (
       <Container>
         <Title>Тест Олдхэма-Морриса</Title>
@@ -106,10 +124,17 @@ class OldhamMorris extends React.Component {
             questionText={question.text}
           />
         ))}
+        {!isTestComplete && (
+          <div>
+            <ResultButton type="button" onClick={this.handleResultClick}>
+              Узнать результат
+            </ResultButton>
+          </div>
+        )}
         {isTestComplete && (
-          <span>
-            Ваш тип: <Link to={resultLink}>{resultType}</Link>
-          </span>
+          <div>
+            Ваш тип: <Link to="/oldham-morris/result">{type}</Link>
+          </div>
         )}
       </Container>
     );

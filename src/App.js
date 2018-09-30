@@ -10,7 +10,7 @@ export default () => (
     <Switch>
       <Route path="/" component={Frontpage} exact />
       <Route path="/oldham-morris" component={OldhamMorris} exact />
-      <Route path="/oldham-morris/type" component={Result} exact />
+      <Route path="/oldham-morris/result" component={Result} exact />
       <Route component={Error} />
     </Switch>
   </BrowserRouter>
