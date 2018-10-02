@@ -104,7 +104,7 @@ class OldhamMorris extends React.Component {
       const resultType = typesData[maxIndex];
       this.setState({
         isTestComplete: true,
-        type: resultType.type,
+        type: resultType.title,
       });
     }
   }

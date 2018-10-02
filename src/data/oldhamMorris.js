@@ -627,72 +627,72 @@ export const answersData = [
 export const typesData = [
   {
     id: 1,
-    type: 'Бдительный',
+    title: 'Бдительный',
     link: '/vigilant',
   },
   {
     id: 2,
-    type: 'Одинокий',
+    title: 'Одинокий',
     link: '/solitary',
   },
   {
     id: 3,
-    type: 'Идеосинкратический',
+    title: 'Идеосинкратический',
     link: '/idiosyncratic',
   },
   {
     id: 4,
-    type: 'Авантюрный',
+    title: 'Авантюрный',
     link: '/adventurous',
   },
   {
     id: 5,
-    type: 'Деятельный',
+    title: 'Деятельный',
     link: '/mercurial',
   },
   {
     id: 6,
-    type: 'Драматический',
+    title: 'Драматический',
     link: '/dramatic',
   },
   {
     id: 7,
-    type: 'Самоуверенный',
+    title: 'Самоуверенный',
     link: '/self-confident',
   },
   {
     id: 8,
-    type: 'Чувствительный',
+    title: 'Чувствительный',
     link: '/sensitive',
   },
   {
     id: 9,
-    type: 'Преданный',
+    title: 'Преданный',
     link: '/devoted',
   },
   {
     id: 10,
-    type: 'Добросовестный',
+    title: 'Добросовестный',
     link: '/conscientious',
   },
   {
     id: 11,
-    type: 'Праздный',
+    title: 'Праздный',
     link: '/leisurely',
   },
   {
     id: 12,
-    type: 'Агрессивный',
+    title: 'Агрессивный',
     link: '/aggressive',
   },
   {
     id: 13,
-    type: 'Альтруистический',
+    title: 'Альтруистический',
     link: '/self-sacrificing',
   },
   {
     id: 14,
-    type: 'Серьёзный',
+    title: 'Серьёзный',
     link: '/serious',
   },
 ];
