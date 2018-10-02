@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Frontpage from './components/Frontpage';
 import OldhamMorris from './components/OldhamMorris';
-import Result from './components/Result';
+import Result from './components/OldhamMorris/Result';
 import Error from './components/Error';
 
 export default () => (

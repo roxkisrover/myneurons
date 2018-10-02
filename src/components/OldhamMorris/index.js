@@ -10,7 +10,7 @@ import {
   getResultArr,
   questionsData,
   typesData,
-} from '../data/oldhamMorris';
+} from '../../data/oldhamMorris';
 
 const Container = styled.div`
   position: relative;

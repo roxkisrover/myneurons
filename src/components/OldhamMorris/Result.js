@@ -1,7 +1,25 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const Container = styled.div`
+  position: relative;
+  margin: 30px auto;
+  padding: 0 20px;
+  width: 100%;
+  max-width: 960px;
+  box-sizing: border-box;
+
+  @media (min-width: 400px) {
+    width: 85%;
+    padding: 0;
+  }
+  @media (min-width: 550px) {
+    width: 80%;
+  }
+`;
 
 const Result = () => (
-  <div>
+  <Container>
     <h1>Тип личности</h1>
     <p>
       Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vitae accusantium officia sequi modi
@@ -18,7 +36,7 @@ const Result = () => (
       consequatur consequuntur totam ipsum deserunt recusandae, eligendi possimus dolores ex autem
       voluptatem sed quasi quo, sint odit! Adipisci, minima?
     </p>
-  </div>
+  </Container>
 );
 
 export default Result;
