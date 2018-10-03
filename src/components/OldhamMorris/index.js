@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import findIndex from 'lodash/findIndex';
 import update from 'immutability-helper';
@@ -112,31 +113,37 @@ class OldhamMorris extends React.Component {
   render() {
     const { isTestComplete, type } = this.state;
     return (
-      <Container>
-        <Title>Тест Олдхэма-Морриса</Title>
-        {questionsData.map(question => (
-          <Question
-            answersData={answersData}
-            handleAnswerClick={this.handleAnswerClick}
-            key={question.id}
-            questionId={question.id}
-            questionTarget={question.target}
-            questionText={question.text}
-          />
-        ))}
-        {!isTestComplete && (
-          <div>
-            <ResultButton type="button" onClick={this.handleResultClick}>
-              Узнать результат
-            </ResultButton>
-          </div>
-        )}
-        {isTestComplete && (
-          <div>
-            Ваш тип: <Link to="/oldham-morris/result">{type}</Link>
-          </div>
-        )}
-      </Container>
+      <React.Fragment>
+        <Helmet>
+          <title>myneurons | Тест Олдхэма-Морриса</title>
+        </Helmet>
+
+        <Container>
+          <Title>Тест Олдхэма-Морриса</Title>
+          {questionsData.map(question => (
+            <Question
+              answersData={answersData}
+              handleAnswerClick={this.handleAnswerClick}
+              key={question.id}
+              questionId={question.id}
+              questionTarget={question.target}
+              questionText={question.text}
+            />
+          ))}
+          {!isTestComplete && (
+            <div>
+              <ResultButton type="button" onClick={this.handleResultClick}>
+                Узнать результат
+              </ResultButton>
+            </div>
+          )}
+          {isTestComplete && (
+            <div>
+              Ваш тип: <Link to="/oldham-morris/result">{type}</Link>
+            </div>
+          )}
+        </Container>
+      </React.Fragment>
     );
   }
 }

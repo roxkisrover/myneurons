@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 
 const Container = styled.div`
@@ -35,17 +36,23 @@ const StyledLink = styled(Link)`
 `;
 
 const Error = () => (
-  <Container>
-    <Section>
-      <StatusImage>
-        <span role="img" aria-label="Poll">
-          📝
-        </span>
-      </StatusImage>
-      <Description>Нужно ответить на все вопросы, чтобы получить результат</Description>
-    </Section>
-    <StyledLink to="/oldham-morris">Перейти к тесту</StyledLink>
-  </Container>
+  <React.Fragment>
+    <Helmet>
+      <title>myneurons | Ошибка</title>
+    </Helmet>
+
+    <Container>
+      <Section>
+        <StatusImage>
+          <span role="img" aria-label="Poll">
+            📝
+          </span>
+        </StatusImage>
+        <Description>Нужно ответить на все вопросы, чтобы получить результат</Description>
+      </Section>
+      <StyledLink to="/oldham-morris">Перейти к тесту</StyledLink>
+    </Container>
+  </React.Fragment>
 );
 
 export default Error;

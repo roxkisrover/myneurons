@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Helmet } from 'react-helmet';
 import { typesData } from '../../../data/oldhamMorris';
 
 const Container = styled.div`
@@ -40,14 +41,20 @@ const Paragraph = styled.p`
 const SelfSacrificing = () => {
   const { title } = typesData[12];
   return (
-    <Container>
-      <Title>{title}</Title>
-      <Paragraph>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti, deserunt autem alias
-        harum commodi dicta! Magni a assumenda, quos veritatis molestiae, facilis in, quae
-        voluptates eligendi perferendis excepturi iusto perspiciatis.
-      </Paragraph>
-    </Container>
+    <React.Fragment>
+      <Helmet>
+        <title> myneurons | {title} тип личности</title>
+      </Helmet>
+
+      <Container>
+        <Title>{title}</Title>
+        <Paragraph>
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti, deserunt autem alias
+          harum commodi dicta! Magni a assumenda, quos veritatis molestiae, facilis in, quae
+          voluptates eligendi perferendis excepturi iusto perspiciatis.
+        </Paragraph>
+      </Container>
+    </React.Fragment>
   );
 };
 

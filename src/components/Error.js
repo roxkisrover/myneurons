@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 
 const Container = styled.div`
@@ -35,13 +36,19 @@ const StyledLink = styled(Link)`
 `;
 
 const Error = () => (
-  <Container>
-    <Section>
-      <StatusCode>404</StatusCode>
-      <Description>Страница не найдена</Description>
-    </Section>
-    <StyledLink to="/">Вернуться на главную</StyledLink>
-  </Container>
+  <React.Fragment>
+    <Helmet>
+      <title>myneurons | Страница не найдена</title>
+    </Helmet>
+
+    <Container>
+      <Section>
+        <StatusCode>404</StatusCode>
+        <Description>Страница не найдена</Description>
+      </Section>
+      <StyledLink to="/">Вернуться на главную</StyledLink>
+    </Container>
+  </React.Fragment>
 );
 
 export default Error;
