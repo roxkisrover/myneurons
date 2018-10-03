@@ -652,7 +652,7 @@ export const typesData = [
   },
   {
     id: 6,
-    title: 'Драматический',
+    title: 'Драматичный',
     link: '/dramatic',
   },
   {
