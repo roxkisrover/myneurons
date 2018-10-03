@@ -709,6 +709,5 @@ export const getResultArr = (answers) => {
 
 export const getMaxIndex = (result) => {
   const max = result.reduce((a, b) => Math.max(a, b));
-  const index = result.indexOf(max);
-  return index;
+  return result.indexOf(max);
 };
