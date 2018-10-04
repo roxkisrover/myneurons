@@ -43,7 +43,11 @@ const Title = styled.h1`
   }
 `;
 
-const ResultButton = styled.button`
+const LinkContainer = styled.div`
+  text-align: center;
+`;
+
+const StyledLink = styled(Link)`
   display: inline-block;
   height: 38px;
   padding: 0 30px;
@@ -78,7 +82,7 @@ class OldhamMorris extends React.Component {
     this.state = {
       answers: [],
       isTestComplete: false,
-      type: '',
+      link: '',
     };
   }
 
@@ -105,13 +109,13 @@ class OldhamMorris extends React.Component {
       const resultType = typesData[maxIndex];
       this.setState({
         isTestComplete: true,
-        type: resultType.title,
+        link: `oldham-morris/result${resultType.link}`,
       });
     }
   }
 
   render() {
-    const { isTestComplete, type } = this.state;
+    const { isTestComplete, link } = this.state;
     return (
       <React.Fragment>
         <Helmet>
@@ -130,17 +134,13 @@ class OldhamMorris extends React.Component {
               questionText={question.text}
             />
           ))}
-          {!isTestComplete && (
-            <div>
-              <ResultButton type="button" onClick={this.handleResultClick}>
-                Узнать результат
-              </ResultButton>
-            </div>
-          )}
+          <button type="button" onClick={this.handleResultClick}>
+            Посчитать результат
+          </button>
           {isTestComplete && (
-            <div>
-              Ваш тип: <Link to="/oldham-morris/result">{type}</Link>
-            </div>
+            <LinkContainer>
+              <StyledLink to={link}>Перейти к результату</StyledLink>
+            </LinkContainer>
           )}
         </Container>
       </React.Fragment>
