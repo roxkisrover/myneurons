@@ -4,32 +4,28 @@ import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 
 const Container = styled.div`
-  position: relative;
-  margin: 30px auto;
-  padding: 0 20px;
-  width: 100%;
-  max-width: 960px;
-  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
-  @media (min-width: 400px) {
-    width: 85%;
-    padding: 0;
-  }
-  @media (min-width: 550px) {
-    width: 80%;
-  }
+const Section = styled.section`
+  padding: 20px;
+  max-width: 960px;
 `;
 
 const Title = styled.h1`
-  margin-top: 0;
-  margin-bottom: 20px;
-  font-weight: 300;
-  font-size: 40px;
-  line-height: 1.2;
-  letter-spacing: -1px;
+  margin: 0 0 20px;
+  font-size: 32px;
+  line-height: 1.125;
+  font-weight: 600;
+  color: #111;
 
   @media (min-width: 550px) {
-    font-size: 50px;
+    font-size: 48px;
+    line-height: 1.08365;
+    font-weight: 600;
   }
 `;
 
@@ -40,8 +36,10 @@ const ResultTemplate = ({ title, children }) => (
     </Helmet>
 
     <Container>
-      <Title>{title}</Title>
-      {children}
+      <Section>
+        <Title>{title}</Title>
+        {children}
+      </Section>
     </Container>
   </React.Fragment>
 );

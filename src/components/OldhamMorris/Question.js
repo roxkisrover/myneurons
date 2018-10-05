@@ -12,7 +12,7 @@ const Divider = styled.hr`
   margin-top: 20px;
   margin-bottom: 25px;
   border-width: 0;
-  border-top: 1px solid #e1e1e1;
+  border-top: 1px solid #d6d6d6;
 `;
 
 class Question extends React.Component {

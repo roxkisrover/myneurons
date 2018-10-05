@@ -14,32 +14,43 @@ import {
 } from '../../data/oldhamMorris';
 
 const Container = styled.div`
-  position: relative;
-  margin: 30px auto;
-  padding: 0 20px;
-  width: 100%;
-  max-width: 960px;
-  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
-  @media (min-width: 400px) {
-    width: 85%;
-    padding: 0;
-  }
-  @media (min-width: 550px) {
-    width: 80%;
-  }
+const Section = styled.section`
+  padding: 20px;
+  max-width: 960px;
 `;
 
 const Title = styled.h1`
-  margin-top: 0;
-  margin-bottom: 20px;
-  font-weight: 300;
-  font-size: 40px;
-  line-height: 1.2;
-  letter-spacing: -1px;
+  margin: 0 0 20px;
+  font-size: 32px;
+  line-height: 1.125;
+  font-weight: 600;
+  color: #111;
 
   @media (min-width: 550px) {
-    font-size: 50px;
+    font-size: 48px;
+    line-height: 1.08365;
+    font-weight: 600;
+  }
+`;
+
+const Description = styled.p`
+  margin: 0 0 20px;
+  padding-bottom: 20px;
+  font-size: 19px;
+  line-height: 1.42115;
+  font-weight: 400;
+  border-bottom: 1px dashed #d6d6d6;
+
+  @media (min-width: 550px) {
+    font-size: 21px;
+    line-height: 1.38105;
+    font-weight: 400;
   }
 `;
 
@@ -123,25 +134,31 @@ class OldhamMorris extends React.Component {
         </Helmet>
 
         <Container>
-          <Title>Тест Олдхэма-Морриса</Title>
-          {questionsData.map(question => (
-            <Question
-              answersData={answersData}
-              handleAnswerClick={this.handleAnswerClick}
-              key={question.id}
-              questionId={question.id}
-              questionTarget={question.target}
-              questionText={question.text}
-            />
-          ))}
-          <button type="button" onClick={this.handleResultClick}>
-            Посчитать результат
-          </button>
-          {isTestComplete && (
-            <LinkContainer>
-              <StyledLink to={link}>Перейти к результату</StyledLink>
-            </LinkContainer>
-          )}
+          <Section>
+            <Title>Тест Олдхэма-Морриса</Title>
+            <Description>
+              Ваша личность уникальна. Используйте этот тест для определения своего преобладающего
+              типа.
+            </Description>
+            {questionsData.map(question => (
+              <Question
+                answersData={answersData}
+                handleAnswerClick={this.handleAnswerClick}
+                key={question.id}
+                questionId={question.id}
+                questionTarget={question.target}
+                questionText={question.text}
+              />
+            ))}
+            <button type="button" onClick={this.handleResultClick}>
+              Посчитать результат
+            </button>
+            {isTestComplete && (
+              <LinkContainer>
+                <StyledLink to={link}>Перейти к результату</StyledLink>
+              </LinkContainer>
+            )}
+          </Section>
         </Container>
       </React.Fragment>
     );

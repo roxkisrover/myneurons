@@ -49,7 +49,7 @@ const Subtitle = styled.h2`
 `;
 
 const Text = styled.p`
-  margin: 0 0 24px;
+  margin: 0 0 20px;
   font-size: 16px;
   line-height: 1.38105;
   font-weight: 400;
@@ -83,6 +83,18 @@ const StyledLink = styled(Link)`
   }
   :hover {
     background-color: #ff466a;
+  }
+`;
+
+const Note = styled.p`
+  margin: 24px 0;
+  font-size: 12px;
+  line-height: 1.4;
+  font-weight: 400;
+  color: #888;
+
+  @media (min-width: 550px) {
+    font-size: 13px;
   }
 `;
 
@@ -121,6 +133,7 @@ const Frontpage = () => (
           Отвечайте <i>«Нет, я не согласен»</i>, если утверждение совершенно ложно для вас.
         </Text>
         <StyledLink to="/oldham-morris">Начать тестирование</StyledLink>
+        <Note>Это бесплатно и не требует регистрации.</Note>
       </Section>
     </Container>
   </React.Fragment>
