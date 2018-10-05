@@ -10,17 +10,13 @@ const Container = styled.div`
   align-items: center;
 
   @media (min-width: 768px) {
-    height: 100vh;
+    min-height: 100vh;
   }
 `;
 
 const Section = styled.section`
   padding: 20px;
   max-width: 960px;
-
-  @media (min-width: 550px) {
-    padding: 0 20px;
-  }
 `;
 
 const Title = styled.h1`
@@ -59,7 +55,7 @@ const Text = styled.p`
   font-weight: 400;
 
   @media (min-width: 550px) {
-    font-size: 21px;
+    font-size: 18px;
   }
 `;
 
