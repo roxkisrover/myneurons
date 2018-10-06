@@ -5,13 +5,8 @@ import { Link } from 'react-router-dom';
 import findIndex from 'lodash/findIndex';
 import update from 'immutability-helper';
 import Question from './Question';
-import {
-  answersData,
-  getMaxIndex,
-  getResultArr,
-  questionsData,
-  typesData,
-} from '../../data/oldhamMorris';
+import { answersData, questionsData, typesData } from '../../data/oldhamMorris';
+import { getMaxIndex, getResultArr } from '../../lib/oldhamMorris';
 
 const Container = styled.div`
   display: flex;
