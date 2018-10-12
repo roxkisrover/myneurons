@@ -1,9 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import findIndex from 'lodash/findIndex';
-import update from 'immutability-helper';
+import { actionAddAnswer, actionEditAnswer, actionSetResult } from '../../actions';
 import Question from './Question';
 import { answersData, questionsData, typesData } from '../../data/oldhamMorris';
 import { getMaxIndex, getResultArr } from '../../lib/oldhamMorris';
@@ -84,31 +86,27 @@ class OldhamMorris extends React.Component {
   constructor(props) {
     super(props);
     this.handleAnswerClick = this.handleAnswerClick.bind(this);
-    this.handleResultClick = this.handleResultClick.bind(this);
     this.state = {
-      answers: [],
       isTestComplete: false,
-      link: '',
+      link: '/',
     };
   }
 
   handleAnswerClick(questionId, questionTarget, answerValue) {
-    const { answers } = this.state;
-    const currentAnswerIndex = findIndex(answers, ['id', questionId]);
-    if (currentAnswerIndex >= 0) {
-      if (answerValue !== answers[currentAnswerIndex].value) {
-        this.setState(state => update(state, {
-          answers: { [currentAnswerIndex]: { value: { $set: answerValue } } },
-        }));
+    const { answers, addAnswer, editAnswer } = this.props;
+    const answerIndex = findIndex(answers, ['id', questionId]);
+    if (answerIndex >= 0) {
+      if (answerValue !== answers[answerIndex].value) {
+        editAnswer({ id: questionId, value: answerValue });
       }
     } else {
-      const newAnswer = { id: questionId, target: questionTarget, value: answerValue };
-      this.setState(state => update(state, { answers: { $push: [newAnswer] } }));
+      addAnswer({ id: questionId, target: questionTarget, value: answerValue });
     }
+    this.calculateResult();
   }
 
-  handleResultClick() {
-    const { answers } = this.state;
+  calculateResult() {
+    const { answers, setResult } = this.props;
     if (answers.length === questionsData.length) {
       const result = getResultArr(answers);
       const maxIndex = getMaxIndex(result);
@@ -117,6 +115,7 @@ class OldhamMorris extends React.Component {
         isTestComplete: true,
         link: `oldham-morris/result${resultType.link}`,
       });
+      setResult(result);
     }
   }
 
@@ -145,13 +144,12 @@ class OldhamMorris extends React.Component {
                 questionText={question.text}
               />
             ))}
-            <button type="button" onClick={this.handleResultClick}>
-              Посчитать результат
-            </button>
-            {isTestComplete && (
+            {isTestComplete ? (
               <LinkContainer>
                 <StyledLink to={link}>Перейти к результату</StyledLink>
               </LinkContainer>
+            ) : (
+              <p>Необходимо ответить на все вопросы для получения результата.</p>
             )}
           </Section>
         </Container>
@@ -160,4 +158,31 @@ class OldhamMorris extends React.Component {
   }
 }
 
-export default OldhamMorris;
+OldhamMorris.propTypes = {
+  answers: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      target: PropTypes.arrayOf(PropTypes.number).isRequired,
+      value: PropTypes.number.isRequired,
+    }).isRequired,
+  ).isRequired,
+  addAnswer: PropTypes.func.isRequired,
+  editAnswer: PropTypes.func.isRequired,
+  setResult: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = state => ({
+  answers: state.answers,
+  result: state.result,
+});
+
+const mapDispatchToProps = dispatch => ({
+  addAnswer: answer => dispatch(actionAddAnswer(answer)),
+  editAnswer: answer => dispatch(actionEditAnswer(answer)),
+  setResult: result => dispatch(actionSetResult(result)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(OldhamMorris);

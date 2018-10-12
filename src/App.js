@@ -19,7 +19,7 @@ import Solitary from './components/OldhamMorris/Result/Solitary';
 import Vigilant from './components/OldhamMorris/Result/Vigilant';
 import Error from './components/Error';
 
-export default () => (
+const App = () => (
   <BrowserRouter>
     <Switch>
       <Route path="/" component={Frontpage} exact />
@@ -43,3 +43,5 @@ export default () => (
     </Switch>
   </BrowserRouter>
 );
+
+export default App;
