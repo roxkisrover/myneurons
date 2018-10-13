@@ -28,7 +28,6 @@ const Title = styled.h1`
   line-height: 1.125;
   font-weight: 600;
   color: #111;
-
   @media (min-width: 550px) {
     font-size: 48px;
     line-height: 1.08365;
@@ -43,7 +42,6 @@ const Description = styled.p`
   line-height: 1.42115;
   font-weight: 400;
   border-bottom: 1px dashed #d6d6d6;
-
   @media (min-width: 550px) {
     font-size: 21px;
     line-height: 1.38105;
@@ -73,7 +71,6 @@ const StyledLink = styled(Link)`
   border: 1px solid #bbb;
   cursor: pointer;
   box-sizing: border-box;
-
   :hover,
   :focus {
     color: #333;
@@ -92,6 +89,13 @@ class OldhamMorris extends React.Component {
     };
   }
 
+  componentDidUpdate(prevProps) {
+    const { answers } = this.props;
+    if (answers !== prevProps.answers && answers.length === questionsData.length) {
+      this.calculateResult();
+    }
+  }
+
   handleAnswerClick(questionId, questionTarget, answerValue) {
     const { answers, addAnswer, editAnswer } = this.props;
     const answerIndex = findIndex(answers, ['id', questionId]);
@@ -102,21 +106,18 @@ class OldhamMorris extends React.Component {
     } else {
       addAnswer({ id: questionId, target: questionTarget, value: answerValue });
     }
-    this.calculateResult();
   }
 
   calculateResult() {
     const { answers, setResult } = this.props;
-    if (answers.length === questionsData.length) {
-      const result = getResultArr(answers);
-      const maxIndex = getMaxIndex(result);
-      const resultType = typesData[maxIndex];
-      this.setState({
-        isTestComplete: true,
-        link: `oldham-morris/result${resultType.link}`,
-      });
-      setResult(result);
-    }
+    const result = getResultArr(answers);
+    const maxIndex = getMaxIndex(result);
+    const resultType = typesData[maxIndex];
+    this.setState({
+      isTestComplete: true,
+      link: `oldham-morris/result${resultType.link}`,
+    });
+    setResult(result);
   }
 
   render() {

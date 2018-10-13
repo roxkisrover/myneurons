@@ -21,7 +21,6 @@ const Button = styled.button`
   border-radius: 4px;
   border: ${props => (props.isActive ? '1px solid #33c3f0' : '1px solid #bbb')};
   cursor: pointer;
-  box-sizing: border-box;
   :hover {
     color: ${props => (props.isActive ? '#fff' : '#333')};
     border-color: ${props => (props.isActive ? '#1eaedb' : '#888')};
@@ -43,6 +42,7 @@ const AnswerButton = ({
   questionTarget,
 }) => (
   <Button
+    disabled
     isActive={isActive}
     onClick={() => {
       handleAnswerClick(questionId, questionTarget, answerValue);
