@@ -8,7 +8,6 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
   @media (min-width: 768px) {
     min-height: 100vh;
   }
@@ -26,7 +25,6 @@ const Title = styled.h1`
   font-size: 21px;
   line-height: 1.09524;
   color: #111;
-
   @media (min-width: 550px) {
     margin-bottom: 22px;
     font-size: 24px;
@@ -41,7 +39,6 @@ const Subtitle = styled.h2`
   font-size: 32px;
   line-height: 1.125;
   color: #111;
-
   @media (min-width: 550px) {
     font-size: 56px;
     line-height: 1.07143;
@@ -53,7 +50,6 @@ const Text = styled.p`
   font-size: 16px;
   line-height: 1.38105;
   font-weight: 400;
-
   @media (min-width: 550px) {
     font-size: 18px;
   }
@@ -73,7 +69,6 @@ const StyledLink = styled(Link)`
   border-radius: 4px;
   cursor: pointer;
   white-space: nowrap;
-
   :active {
     background-color: #eb3256;
   }
@@ -92,7 +87,6 @@ const Note = styled.p`
   line-height: 1.4;
   font-weight: 400;
   color: #888;
-
   @media (min-width: 550px) {
     font-size: 13px;
   }
