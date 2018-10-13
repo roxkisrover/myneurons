@@ -21,13 +21,16 @@ const Button = styled.button`
   border-radius: 4px;
   border: ${props => (props.isActive ? '1px solid #33c3f0' : '1px solid #bbb')};
   cursor: pointer;
-  :hover {
+  :not(:disabled):hover {
     color: ${props => (props.isActive ? '#fff' : '#333')};
     border-color: ${props => (props.isActive ? '#1eaedb' : '#888')};
     background-color: ${props => (props.isActive ? '#1eaedb' : 'transparent')};
   }
   :focus {
     outline: 0;
+  }
+  :disabled {
+    color: ${props => (props.isActive ? '#eee' : '#999')};
   }
 `;
 
@@ -42,7 +45,6 @@ const AnswerButton = ({
   questionTarget,
 }) => (
   <Button
-    disabled
     isActive={isActive}
     onClick={() => {
       handleAnswerClick(questionId, questionTarget, answerValue);
