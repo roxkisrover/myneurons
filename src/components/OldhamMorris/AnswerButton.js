@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 const Button = styled.button`
   display: inline-block;
@@ -41,10 +42,12 @@ const AnswerButton = ({
   handleActiveIndexChange,
   handleAnswerClick,
   isActive,
+  isTestComplete,
   questionId,
   questionTarget,
 }) => (
   <Button
+    disabled={isTestComplete}
     isActive={isActive}
     onClick={() => {
       handleAnswerClick(questionId, questionTarget, answerValue);
@@ -65,6 +68,15 @@ AnswerButton.propTypes = {
   isActive: PropTypes.bool.isRequired,
   questionId: PropTypes.number.isRequired,
   questionTarget: PropTypes.arrayOf(PropTypes.number).isRequired,
+  isTestComplete: PropTypes.bool,
 };
 
-export default AnswerButton;
+AnswerButton.defaultProps = {
+  isTestComplete: false,
+};
+
+const mapStateToProps = state => ({
+  isTestComplete: state.isTestComplete,
+});
+
+export default connect(mapStateToProps)(AnswerButton);

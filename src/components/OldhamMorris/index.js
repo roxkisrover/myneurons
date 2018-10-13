@@ -5,7 +5,12 @@ import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import findIndex from 'lodash/findIndex';
-import { actionAddAnswer, actionEditAnswer, actionSetResult } from '../../actions';
+import {
+  actionAddAnswer,
+  actionEditAnswer,
+  actionSetResult,
+  actionSetTestComplete,
+} from '../../actions';
 import Question from './Question';
 import { answersData, questionsData, typesData } from '../../data/oldhamMorris';
 import { getMaxIndex, getResultArr } from '../../lib/oldhamMorris';
@@ -84,7 +89,6 @@ class OldhamMorris extends React.Component {
     super(props);
     this.handleAnswerClick = this.handleAnswerClick.bind(this);
     this.state = {
-      isTestComplete: false,
       link: '/',
     };
   }
@@ -109,19 +113,20 @@ class OldhamMorris extends React.Component {
   }
 
   calculateResult() {
-    const { answers, setResult } = this.props;
+    const { answers, setResult, setTestComplete } = this.props;
     const result = getResultArr(answers);
     const maxIndex = getMaxIndex(result);
     const resultType = typesData[maxIndex];
+    setResult(result);
+    setTestComplete(true);
     this.setState({
-      isTestComplete: true,
       link: `oldham-morris/result${resultType.link}`,
     });
-    setResult(result);
   }
 
   render() {
-    const { isTestComplete, link } = this.state;
+    const { link } = this.state;
+    const { isTestComplete } = this.props;
     return (
       <React.Fragment>
         <Helmet>
@@ -169,11 +174,18 @@ OldhamMorris.propTypes = {
   ).isRequired,
   addAnswer: PropTypes.func.isRequired,
   editAnswer: PropTypes.func.isRequired,
+  isTestComplete: PropTypes.bool,
   setResult: PropTypes.func.isRequired,
+  setTestComplete: PropTypes.func.isRequired,
+};
+
+OldhamMorris.defaultProps = {
+  isTestComplete: false,
 };
 
 const mapStateToProps = state => ({
   answers: state.answers,
+  isTestComplete: state.isTestComplete,
   result: state.result,
 });
 
@@ -181,6 +193,7 @@ const mapDispatchToProps = dispatch => ({
   addAnswer: answer => dispatch(actionAddAnswer(answer)),
   editAnswer: answer => dispatch(actionEditAnswer(answer)),
   setResult: result => dispatch(actionSetResult(result)),
+  setTestComplete: bool => dispatch(actionSetTestComplete(bool)),
 });
 
 export default connect(
