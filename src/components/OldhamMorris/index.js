@@ -89,7 +89,7 @@ class OldhamMorris extends React.Component {
     super(props);
     this.handleAnswerClick = this.handleAnswerClick.bind(this);
     this.state = {
-      link: '/',
+      resultLink: '/',
     };
   }
 
@@ -113,19 +113,21 @@ class OldhamMorris extends React.Component {
   }
 
   calculateResult() {
-    const { answers, setResult, setTestComplete } = this.props;
+    const {
+      answers, setResult, setTestComplete, match,
+    } = this.props;
     const result = getResultArr(answers);
     const maxIndex = getMaxIndex(result);
     const resultType = typesData[maxIndex];
     setResult(result);
     setTestComplete(true);
     this.setState({
-      link: `oldham-morris/result${resultType.link}`,
+      resultLink: `${match.url}/result${resultType.link}`,
     });
   }
 
   render() {
-    const { link } = this.state;
+    const { resultLink } = this.state;
     const { isTestComplete } = this.props;
     return (
       <React.Fragment>
@@ -152,7 +154,7 @@ class OldhamMorris extends React.Component {
             ))}
             {isTestComplete ? (
               <LinkContainer>
-                <StyledLink to={link}>Перейти к результату</StyledLink>
+                <StyledLink to={resultLink}>Перейти к результату</StyledLink>
               </LinkContainer>
             ) : (
               <p>Необходимо ответить на все вопросы для получения результата.</p>
@@ -175,6 +177,9 @@ OldhamMorris.propTypes = {
   addAnswer: PropTypes.func.isRequired,
   editAnswer: PropTypes.func.isRequired,
   isTestComplete: PropTypes.bool,
+  match: PropTypes.shape({
+    url: PropTypes.string.isRequired,
+  }).isRequired,
   setResult: PropTypes.func.isRequired,
   setTestComplete: PropTypes.func.isRequired,
 };
