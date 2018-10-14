@@ -23,6 +23,7 @@ const Container = styled.div`
 `;
 
 const Section = styled.section`
+  margin-bottom: 60px;
   padding: 20px;
   max-width: 960px;
 `;
