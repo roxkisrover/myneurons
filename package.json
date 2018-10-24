@@ -1,26 +1,19 @@
 {
   "name": "myneurons",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "lint": "eslint src"
-  },
   "dependencies": {
     "lodash": "^4.17.11",
     "normalize.css": "^8.0.0",
     "prop-types": "^15.6.2",
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
     "react-helmet": "^5.2.0",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "2.0.4",
-    "redux": "^4.0.0",
-    "styled-components": "^3.4.10"
+    "react-scripts": "2.0.5",
+    "redux": "^4.0.1",
+    "styled-components": "^4.0.2"
   },
   "devDependencies": {
     "eslint-config-airbnb": "17.1.0",
@@ -29,9 +22,34 @@
     "eslint-plugin-react": "7.11.0",
     "husky": "^1.1.2"
   },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "eslint src"
+  },
+  "eslintConfig": {
+    "extends": "airbnb",
+    "env": {
+      "browser": true,
+      "jest": true
+    },
+    "rules": {
+      "react/jsx-one-expression-per-line": 0,
+      "react/jsx-filename-extension": [
+        1,
+        {
+          "extensions": [
+            ".js"
+          ]
+        }
+      ]
+    }
+  },
   "husky": {
     "hooks": {
-      "pre-push": "npm run lint"
+      "pre-push": "yarn lint"
     }
   },
   "browserslist": [
