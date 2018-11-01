@@ -1,6 +1,10 @@
 import {
-  ADD_ANSWER, EDIT_ANSWER, SET_RESULT, SET_TEST_COMPLETE,
-} from '../data/types';
+  ADD_ANSWER,
+  EDIT_ANSWER,
+  SET_RESULT,
+  SET_TEST_COMPLETE,
+  SET_TITLE,
+} from '../data/constants';
 
 export const actionAddAnswer = newAnswer => ({
   type: ADD_ANSWER,
@@ -20,4 +24,9 @@ export const actionSetResult = result => ({
 export const actionSetTestComplete = bool => ({
   type: SET_TEST_COMPLETE,
   bool,
+});
+
+export const actionSetTitle = title => ({
+  type: SET_TITLE,
+  title,
 });

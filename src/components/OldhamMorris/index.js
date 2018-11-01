@@ -10,6 +10,7 @@ import {
   actionEditAnswer,
   actionSetResult,
   actionSetTestComplete,
+  actionSetTitle,
 } from '../../actions';
 import Question from './Question';
 import { answersData, questionsData, typesData } from '../../data/oldhamMorris';
@@ -115,15 +116,17 @@ class OldhamMorris extends React.Component {
 
   calculateResult() {
     const {
-      answers, setResult, setTestComplete, match,
+      answers, match, setResult, setTestComplete, setTitle,
     } = this.props;
     const result = getResultArr(answers);
     const maxIndex = getMaxIndex(result);
     const resultType = typesData[maxIndex];
+    const resultTitle = resultType.title;
     setResult(result);
+    setTitle(resultTitle);
     setTestComplete(true);
     this.setState({
-      resultLink: `${match.url}/result${resultType.link}`,
+      resultLink: `${match.url}${resultType.link}`,
     });
   }
 
@@ -160,6 +163,18 @@ class OldhamMorris extends React.Component {
             ) : (
               <p>Необходимо ответить на все вопросы для получения результата.</p>
             )}
+            {/* === TEMPORARY DATA FOR DEBUGGING === */}
+            <div>
+              <hr style={{ color: 'red' }} />
+              <h3>Service data:</h3>
+              <ul>
+                {typesData.map(item => (
+                  <li key={item.id}>
+                    <Link to={`/oldham-morris${item.link}`}>{item.title}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </Section>
         </Container>
       </React.Fragment>
@@ -183,6 +198,7 @@ OldhamMorris.propTypes = {
   }).isRequired,
   setResult: PropTypes.func.isRequired,
   setTestComplete: PropTypes.func.isRequired,
+  setTitle: PropTypes.func.isRequired,
 };
 
 OldhamMorris.defaultProps = {
@@ -200,6 +216,7 @@ const mapDispatchToProps = dispatch => ({
   editAnswer: answer => dispatch(actionEditAnswer(answer)),
   setResult: result => dispatch(actionSetResult(result)),
   setTestComplete: bool => dispatch(actionSetTestComplete(bool)),
+  setTitle: title => dispatch(actionSetTitle(title)),
 });
 
 export default connect(

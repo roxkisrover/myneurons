@@ -1,4 +1,4 @@
-import { SET_TEST_COMPLETE } from '../data/types';
+import { SET_TEST_COMPLETE } from '../data/constants';
 
 const isTestComplete = (state = false, action) => {
   switch (action.type) {

@@ -92,7 +92,7 @@ const Note = styled.p`
   }
 `;
 
-const Frontpage = () => (
+const FrontPage = () => (
   <React.Fragment>
     <Helmet>
       <title>myneurons | Главная</title>
@@ -133,4 +133,4 @@ const Frontpage = () => (
   </React.Fragment>
 );
 
-export default Frontpage;
+export default FrontPage;

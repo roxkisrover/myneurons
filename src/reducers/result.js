@@ -1,4 +1,4 @@
-import { SET_RESULT } from '../data/types';
+import { SET_RESULT } from '../data/constants';
 
 const result = (state = [], action) => {
   switch (action.type) {

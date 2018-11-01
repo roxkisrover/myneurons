@@ -1,4 +1,4 @@
-import { ADD_ANSWER, EDIT_ANSWER } from '../data/types';
+import { ADD_ANSWER, EDIT_ANSWER } from '../data/constants';
 
 const answers = (state = [], action) => {
   switch (action.type) {
