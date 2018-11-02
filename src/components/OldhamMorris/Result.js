@@ -51,7 +51,7 @@ class Result extends React.Component {
     this.state = { description: null };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     // === TEMPORARY DATA FOR DEBUGGING ===
     const { match } = this.props;
     const typeFromUrl = match.params.type;
