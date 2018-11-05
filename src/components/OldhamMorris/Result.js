@@ -31,20 +31,6 @@ const Section = styled.section`
   max-width: 960px;
 `;
 
-const Title = styled.h1`
-  margin: 0 0 20px;
-  font-size: 32px;
-  line-height: 1.125;
-  font-weight: 600;
-  color: #111;
-
-  @media (min-width: 550px) {
-    font-size: 48px;
-    line-height: 1.08365;
-    font-weight: 600;
-  }
-`;
-
 class Result extends React.Component {
   constructor(props) {
     super(props);
@@ -172,7 +158,7 @@ class Result extends React.Component {
 
         <Container>
           <Section>
-            <Title>{title}</Title>
+            <h1>{title}</h1>
             <ReactMarkdown source={description} />
           </Section>
         </Container>
