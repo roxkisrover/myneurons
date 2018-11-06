@@ -8,7 +8,7 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   @media (min-width: 768px) {
-    min-height: 100vh;
+    ${props => (props.isVerticallyCentered ? 'min-height: 100vh;' : '')};
   }
 `;
 
@@ -17,14 +17,19 @@ const Content = styled.div`
   max-width: 960px;
 `;
 
-const Container = ({ children }) => (
-  <Wrapper>
+const Container = ({ children, isVerticallyCentered }) => (
+  <Wrapper isVerticallyCentered={isVerticallyCentered}>
     <Content>{children}</Content>
   </Wrapper>
 );
 
 Container.propTypes = {
   children: PropTypes.node.isRequired,
+  isVerticallyCentered: PropTypes.bool,
+};
+
+Container.defaultProps = {
+  isVerticallyCentered: false,
 };
 
 export default Container;

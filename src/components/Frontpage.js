@@ -12,7 +12,7 @@ const FrontPage = () => (
       <title>myneurons | Главная</title>
     </Helmet>
 
-    <Container>
+    <Container isVerticallyCentered>
       <Row gutter={24}>
         <Col md={{ span: 12 }}>
           <h1>myneurons</h1>
