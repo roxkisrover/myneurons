@@ -73,6 +73,7 @@ class OldhamMorris extends React.Component {
     setOmResultTitle(resultTitle);
     setOmTestComplete(true);
     this.setState({
+      progressPercent: 100,
       resultLink: `${match.url}${resultType.link}`,
     });
   }
