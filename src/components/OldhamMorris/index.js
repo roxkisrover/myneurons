@@ -2,134 +2,90 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import findIndex from 'lodash/findIndex';
 import {
-  actionAddAnswer,
-  actionEditAnswer,
-  actionSetResult,
-  actionSetTestComplete,
-} from '../../actions';
-import Question from './Question';
-import { answersData, questionsData, typesData } from '../../data/oldhamMorris';
+  Breadcrumb, Icon, Tooltip, Progress, Divider, Button,
+} from 'antd';
+import omQuestionsData from '../../data/oldhamMorris/questions';
+import omAnswersData from '../../data/oldhamMorris/answers';
+import omTypesData from '../../data/oldhamMorris/types';
 import { getMaxIndex, getResultArr } from '../../lib/oldhamMorris';
+import Container from '../Container';
+import Batch from '../Test/Batch';
+import * as actions from '../../actions/oldhamMorris';
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Section = styled.section`
-  margin-bottom: 60px;
-  padding: 20px;
-  max-width: 960px;
-`;
-
-const Title = styled.h1`
-  margin: 0 0 20px;
-  font-size: 32px;
-  line-height: 1.125;
-  font-weight: 600;
-  color: #111;
-  @media (min-width: 550px) {
-    font-size: 48px;
-    line-height: 1.08365;
-    font-weight: 600;
-  }
-`;
-
-const Description = styled.p`
-  margin: 0 0 20px;
-  padding-bottom: 20px;
-  font-size: 19px;
-  line-height: 1.42115;
-  font-weight: 400;
-  border-bottom: 1px dashed #d6d6d6;
-  @media (min-width: 550px) {
-    font-size: 21px;
-    line-height: 1.38105;
-    font-weight: 400;
-  }
-`;
-
-const LinkContainer = styled.div`
+const ButtonContainer = styled.div`
+  margin-bottom: 90px;
   text-align: center;
-`;
-
-const StyledLink = styled(Link)`
-  display: inline-block;
-  height: 38px;
-  padding: 0 30px;
-  color: #555;
-  text-align: center;
-  font-size: 11px;
-  font-weight: 600;
-  line-height: 38px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  text-decoration: none;
-  white-space: nowrap;
-  background-color: transparent;
-  border-radius: 4px;
-  border: 1px solid #bbb;
-  cursor: pointer;
-  box-sizing: border-box;
-  :hover,
-  :focus {
-    color: #333;
-    border-color: #888;
-    outline: 0;
-  }
 `;
 
 class OldhamMorris extends React.Component {
   constructor(props) {
     super(props);
-    this.handleAnswerClick = this.handleAnswerClick.bind(this);
     this.state = {
+      questionsCount: omQuestionsData.length,
+      questionsBatchLength: 10, // constant
+      progressPercent: 0,
       resultLink: '/',
     };
+    this.setProgressPercent = this.setProgressPercent.bind(this);
+    this.handleAnswerClick = this.handleAnswerClick.bind(this);
+    this.calculateResult = this.calculateResult.bind(this);
   }
 
   componentDidUpdate(prevProps) {
-    const { answers } = this.props;
-    if (answers !== prevProps.answers && answers.length === questionsData.length) {
+    const { questionsCount } = this.state;
+    const { omAnswers } = this.props;
+
+    if (omAnswers !== prevProps.omAnswers && omAnswers.length === questionsCount) {
       this.calculateResult();
     }
   }
 
+  setProgressPercent(percent) {
+    this.setState({ progressPercent: percent });
+  }
+
   handleAnswerClick(questionId, questionTarget, answerValue) {
-    const { answers, addAnswer, editAnswer } = this.props;
-    const answerIndex = findIndex(answers, ['id', questionId]);
+    const { omAnswers, addOmAnswer, editOmAnswer } = this.props;
+    const answerIndex = findIndex(omAnswers, ['id', questionId]);
+
     if (answerIndex >= 0) {
-      if (answerValue !== answers[answerIndex].value) {
-        editAnswer({ id: questionId, value: answerValue });
+      if (answerValue !== omAnswers[answerIndex].value) {
+        editOmAnswer({ id: questionId, value: answerValue });
       }
     } else {
-      addAnswer({ id: questionId, target: questionTarget, value: answerValue });
+      addOmAnswer({ id: questionId, target: questionTarget, value: answerValue });
     }
   }
 
   calculateResult() {
     const {
-      answers, setResult, setTestComplete, match,
+      match, omAnswers, setOmResultArr, setOmTestComplete, setOmResultTitle,
     } = this.props;
-    const result = getResultArr(answers);
-    const maxIndex = getMaxIndex(result);
-    const resultType = typesData[maxIndex];
-    setResult(result);
-    setTestComplete(true);
+    const resultArr = getResultArr(omAnswers);
+    const maxIndex = getMaxIndex(resultArr);
+    const resultType = omTypesData[maxIndex];
+    const resultTitle = resultType.title;
+
+    setOmResultArr(resultArr);
+    setOmResultTitle(resultTitle);
+    setOmTestComplete(true);
     this.setState({
-      resultLink: `${match.url}/result${resultType.link}`,
+      progressPercent: 100,
+      resultLink: `${match.url}${resultType.link}`,
     });
   }
 
   render() {
-    const { resultLink } = this.state;
-    const { isTestComplete } = this.props;
+    const {
+      questionsCount, questionsBatchLength, progressPercent, resultLink,
+    } = this.state;
+    const { isOmTestComplete } = this.props;
+    const questionsBatchCount = Math.ceil(questionsCount / questionsBatchLength);
+    const progressIncrement = 100 / questionsBatchCount;
+
     return (
       <React.Fragment>
         <Helmet>
@@ -137,30 +93,76 @@ class OldhamMorris extends React.Component {
         </Helmet>
 
         <Container>
-          <Section>
-            <Title>Тест Олдхэма-Морриса</Title>
-            <Description>
-              Ваша личность уникальна. Используйте этот тест для определения своего преобладающего
-              типа.
-            </Description>
-            {questionsData.map(question => (
-              <Question
-                answersData={answersData}
-                handleAnswerClick={this.handleAnswerClick}
-                key={question.id}
-                questionId={question.id}
-                questionTarget={question.target}
-                questionText={question.text}
-              />
-            ))}
-            {isTestComplete ? (
-              <LinkContainer>
-                <StyledLink to={resultLink}>Перейти к результату</StyledLink>
-              </LinkContainer>
-            ) : (
-              <p>Необходимо ответить на все вопросы для получения результата.</p>
+          <Breadcrumb>
+            <Breadcrumb.Item href="/">
+              <Icon type="home" />
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <Icon type="form" />
+              <span>Тест Олдхэма-Морриса</span>
+            </Breadcrumb.Item>
+          </Breadcrumb>
+
+          <Divider />
+
+          <h1>Методика Олдхэма-Морриса</h1>
+          <h3>
+            Ваша личность уникальна. Используйте этот тест для определения своего преобладающего
+            типа.
+          </h3>
+          <Divider dashed />
+          <p>
+            Тест содержит <strong>{questionsCount} вопросов</strong>, на которые нужно ответить,
+            хорошенько обдумывая каждый. Постарайтесь сделать это максимально точно и честно. Ваш
+            автопортрет будет настолько же точным, насколько правдивыми будут ответы. Даже если вы
+            считаете, что вопрос не касается вас или вашей личной жизни, отвечайте так, как если бы
+            он имел к вам отношение.
+          </p>
+          <p>
+            Некоторые вопросы могут показаться слишком личными, – помните, что ответы на каждый
+            отдельный вопрос нигде не сохраняются, и никто (даже вы сами) не сможет их увидеть по
+            окончании теста.
+          </p>
+          <p>
+            Отвечайте <em>«Да, я согласен»</em>, если утверждение совершенно верно для вас в
+            большинстве случаев.
+          </p>
+          <p>
+            Отвечайте <em>«Может быть, я согласен»</em>, если утверждение иногда, в каких-то случаях
+            верно для вас. Также используйте этот ответ для утверждений, состоящих из нескольких
+            частей, если вы согласны с одной частью, но не согласны с другой.
+          </p>
+          <p>
+            Отвечайте <em>«Нет, я не согласен»</em>, если утверждение совершенно ложно для вас.
+          </p>
+
+          <Divider dashed />
+
+          <Tooltip title={`Прогресс выполнения: ${Math.floor(progressPercent)}%`}>
+            <Progress id="progress" percent={progressPercent} showInfo={false} />
+          </Tooltip>
+
+          <Divider />
+
+          <Batch
+            answersData={omAnswersData}
+            progressPercent={progressPercent}
+            progressIncrement={progressIncrement}
+            questionsData={omQuestionsData}
+            questionsBatchLength={questionsBatchLength}
+            questionsCount={questionsCount}
+            questionsBatchCount={questionsBatchCount}
+            setProgressPercent={this.setProgressPercent}
+            handleAnswerClick={this.handleAnswerClick}
+          />
+
+          <ButtonContainer>
+            {isOmTestComplete && (
+              <Button type="primary" href={resultLink}>
+                Перейти к результату
+              </Button>
             )}
-          </Section>
+          </ButtonContainer>
         </Container>
       </React.Fragment>
     );
@@ -168,38 +170,40 @@ class OldhamMorris extends React.Component {
 }
 
 OldhamMorris.propTypes = {
-  answers: PropTypes.arrayOf(
+  omAnswers: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       target: PropTypes.arrayOf(PropTypes.number).isRequired,
       value: PropTypes.number.isRequired,
     }).isRequired,
   ).isRequired,
-  addAnswer: PropTypes.func.isRequired,
-  editAnswer: PropTypes.func.isRequired,
-  isTestComplete: PropTypes.bool,
+  isOmTestComplete: PropTypes.bool,
   match: PropTypes.shape({
     url: PropTypes.string.isRequired,
   }).isRequired,
-  setResult: PropTypes.func.isRequired,
-  setTestComplete: PropTypes.func.isRequired,
+  addOmAnswer: PropTypes.func.isRequired,
+  editOmAnswer: PropTypes.func.isRequired,
+  setOmResultArr: PropTypes.func.isRequired,
+  setOmTestComplete: PropTypes.func.isRequired,
+  setOmResultTitle: PropTypes.func.isRequired,
 };
 
 OldhamMorris.defaultProps = {
-  isTestComplete: false,
+  isOmTestComplete: false,
 };
 
 const mapStateToProps = state => ({
-  answers: state.answers,
-  isTestComplete: state.isTestComplete,
-  result: state.result,
+  omAnswers: state.omAnswers,
+  isOmTestComplete: state.isOmTestComplete,
+  omResultArr: state.omResultArr,
 });
 
 const mapDispatchToProps = dispatch => ({
-  addAnswer: answer => dispatch(actionAddAnswer(answer)),
-  editAnswer: answer => dispatch(actionEditAnswer(answer)),
-  setResult: result => dispatch(actionSetResult(result)),
-  setTestComplete: bool => dispatch(actionSetTestComplete(bool)),
+  addOmAnswer: answer => dispatch(actions.addOmAnswer(answer)),
+  editOmAnswer: answer => dispatch(actions.editOmAnswer(answer)),
+  setOmResultArr: resultArr => dispatch(actions.setOmResultArr(resultArr)),
+  setOmTestComplete: bool => dispatch(actions.setOmTestComplete(bool)),
+  setOmResultTitle: title => dispatch(actions.setOmResultTitle(title)),
 });
 
 export default connect(
