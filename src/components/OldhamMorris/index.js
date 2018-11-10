@@ -7,19 +7,15 @@ import findIndex from 'lodash/findIndex';
 import {
   Breadcrumb, Icon, Tooltip, Progress, Divider, Button,
 } from 'antd';
-import {
-  actionAddAnswer,
-  actionEditAnswer,
-  actionSetResult,
-  actionSetTestComplete,
-  actionSetTitle,
-} from '../../actions';
-import Question from './Question';
-import { answersData, questionsData, typesData } from '../../data/oldhamMorris';
+import omQuestionsData from '../../data/oldhamMorris/questions';
+import omAnswersData from '../../data/oldhamMorris/answers';
+import omTypesData from '../../data/oldhamMorris/types';
 import { getMaxIndex, getResultArr } from '../../lib/oldhamMorris';
 import Container from '../Container';
+import Batch from './Batch';
+import * as actions from '../../actions/oldhamMorris';
 
-const LinkContainer = styled.div`
+const ButtonContainer = styled.div`
   margin-bottom: 90px;
   text-align: center;
 `;
@@ -27,51 +23,68 @@ const LinkContainer = styled.div`
 class OldhamMorris extends React.Component {
   constructor(props) {
     super(props);
-    this.handleAnswerClick = this.handleAnswerClick.bind(this);
     this.state = {
+      questionsCount: omQuestionsData.length,
+      questionsBatchLength: 10, // constant
       progressPercent: 0,
       resultLink: '/',
     };
+    this.setProgressPercent = this.setProgressPercent.bind(this);
+    this.handleAnswerClick = this.handleAnswerClick.bind(this);
+    this.calculateResult = this.calculateResult.bind(this);
   }
 
   componentDidUpdate(prevProps) {
-    const { answers } = this.props;
-    if (answers !== prevProps.answers && answers.length === questionsData.length) {
+    const { questionsCount } = this.state;
+    const { omAnswers } = this.props;
+
+    if (omAnswers !== prevProps.omAnswers && omAnswers.length === questionsCount) {
       this.calculateResult();
     }
   }
 
+  setProgressPercent(percent) {
+    this.setState({ progressPercent: percent });
+  }
+
   handleAnswerClick(questionId, questionTarget, answerValue) {
-    const { answers, addAnswer, editAnswer } = this.props;
-    const answerIndex = findIndex(answers, ['id', questionId]);
+    const { omAnswers, addOmAnswer, editOmAnswer } = this.props;
+    const answerIndex = findIndex(omAnswers, ['id', questionId]);
+
     if (answerIndex >= 0) {
-      if (answerValue !== answers[answerIndex].value) {
-        editAnswer({ id: questionId, value: answerValue });
+      if (answerValue !== omAnswers[answerIndex].value) {
+        editOmAnswer({ id: questionId, value: answerValue });
       }
     } else {
-      addAnswer({ id: questionId, target: questionTarget, value: answerValue });
+      addOmAnswer({ id: questionId, target: questionTarget, value: answerValue });
     }
   }
 
   calculateResult() {
     const {
-      answers, match, setResult, setTestComplete, setTitle,
+      match, omAnswers, setOmResultArr, setOmTestComplete, setOmResultTitle,
     } = this.props;
-    const result = getResultArr(answers);
-    const maxIndex = getMaxIndex(result);
-    const resultType = typesData[maxIndex];
+    const resultArr = getResultArr(omAnswers);
+    const maxIndex = getMaxIndex(resultArr);
+    const resultType = omTypesData[maxIndex];
     const resultTitle = resultType.title;
-    setResult(result);
-    setTitle(resultTitle);
-    setTestComplete(true);
+
+    setOmResultArr(resultArr);
+    setOmResultTitle(resultTitle);
+    setOmTestComplete(true);
     this.setState({
       resultLink: `${match.url}${resultType.link}`,
     });
   }
 
   render() {
-    const { progressPercent, resultLink } = this.state;
-    const { isTestComplete } = this.props;
+    const {
+      questionsCount, questionsBatchLength, progressPercent, resultLink,
+    } = this.state;
+    const { isOmTestComplete } = this.props;
+    const questionsBatchCount = Math.ceil(questionsCount / questionsBatchLength);
+    const progressIncrement = 100 / questionsBatchCount;
+
     return (
       <React.Fragment>
         <Helmet>
@@ -89,9 +102,7 @@ class OldhamMorris extends React.Component {
             </Breadcrumb.Item>
           </Breadcrumb>
 
-          <Tooltip title={`Прогресс выполнения: ${progressPercent}%`}>
-            <Progress percent={progressPercent} />
-          </Tooltip>
+          <Divider />
 
           <h1>Методика Олдхэма-Морриса</h1>
           <h3>
@@ -100,11 +111,11 @@ class OldhamMorris extends React.Component {
           </h3>
           <Divider dashed />
           <p>
-            Тест содержит <strong>107 вопросов</strong>, на которые нужно ответить, хорошенько
-            обдумывая каждый. Постарайтесь сделать это максимально точно и честно. Ваш автопортрет
-            будет настолько же точным, насколько правдивыми будут ответы. Даже если вы считаете, что
-            вопрос не касается вас или вашей личной жизни, отвечайте так, как если бы он имел к вам
-            отношение.
+            Тест содержит <strong>{questionsCount} вопросов</strong>, на которые нужно ответить,
+            хорошенько обдумывая каждый. Постарайтесь сделать это максимально точно и честно. Ваш
+            автопортрет будет настолько же точным, насколько правдивыми будут ответы. Даже если вы
+            считаете, что вопрос не касается вас или вашей личной жизни, отвечайте так, как если бы
+            он имел к вам отношение.
           </p>
           <p>
             Некоторые вопросы могут показаться слишком личными, – помните, что ответы на каждый
@@ -123,24 +134,33 @@ class OldhamMorris extends React.Component {
           <p>
             Отвечайте <em>«Нет, я не согласен»</em>, если утверждение совершенно ложно для вас.
           </p>
+
           <Divider dashed />
 
-          {questionsData.map(question => (
-            <Question
-              answersData={answersData}
-              handleAnswerClick={this.handleAnswerClick}
-              key={question.id}
-              questionId={question.id}
-              questionTarget={question.target}
-              questionText={question.text}
-            />
-          ))}
-          {isTestComplete ? (
-            <LinkContainer>
+          <Tooltip title={`Прогресс выполнения: ${Math.floor(progressPercent)}%`}>
+            <Progress id="progress" percent={progressPercent} showInfo={false} />
+          </Tooltip>
+
+          <Divider />
+
+          <Batch
+            answersData={omAnswersData}
+            progressPercent={progressPercent}
+            progressIncrement={progressIncrement}
+            questionsData={omQuestionsData}
+            questionsBatchLength={questionsBatchLength}
+            questionsCount={questionsCount}
+            questionsBatchCount={questionsBatchCount}
+            setProgressPercent={this.setProgressPercent}
+            handleAnswerClick={this.handleAnswerClick}
+          />
+
+          {isOmTestComplete ? (
+            <ButtonContainer>
               <Button type="primary" href={resultLink}>
                 Перейти к результату
               </Button>
-            </LinkContainer>
+            </ButtonContainer>
           ) : (
             <p>Необходимо ответить на все вопросы для получения результата.</p>
           )}
@@ -151,40 +171,40 @@ class OldhamMorris extends React.Component {
 }
 
 OldhamMorris.propTypes = {
-  answers: PropTypes.arrayOf(
+  omAnswers: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       target: PropTypes.arrayOf(PropTypes.number).isRequired,
       value: PropTypes.number.isRequired,
     }).isRequired,
   ).isRequired,
-  addAnswer: PropTypes.func.isRequired,
-  editAnswer: PropTypes.func.isRequired,
-  isTestComplete: PropTypes.bool,
+  isOmTestComplete: PropTypes.bool,
   match: PropTypes.shape({
     url: PropTypes.string.isRequired,
   }).isRequired,
-  setResult: PropTypes.func.isRequired,
-  setTestComplete: PropTypes.func.isRequired,
-  setTitle: PropTypes.func.isRequired,
+  addOmAnswer: PropTypes.func.isRequired,
+  editOmAnswer: PropTypes.func.isRequired,
+  setOmResultArr: PropTypes.func.isRequired,
+  setOmTestComplete: PropTypes.func.isRequired,
+  setOmResultTitle: PropTypes.func.isRequired,
 };
 
 OldhamMorris.defaultProps = {
-  isTestComplete: false,
+  isOmTestComplete: false,
 };
 
 const mapStateToProps = state => ({
-  answers: state.answers,
-  isTestComplete: state.isTestComplete,
-  result: state.result,
+  omAnswers: state.omAnswers,
+  isOmTestComplete: state.isOmTestComplete,
+  omResultArr: state.omResultArr,
 });
 
 const mapDispatchToProps = dispatch => ({
-  addAnswer: answer => dispatch(actionAddAnswer(answer)),
-  editAnswer: answer => dispatch(actionEditAnswer(answer)),
-  setResult: result => dispatch(actionSetResult(result)),
-  setTestComplete: bool => dispatch(actionSetTestComplete(bool)),
-  setTitle: title => dispatch(actionSetTitle(title)),
+  addOmAnswer: answer => dispatch(actions.addOmAnswer(answer)),
+  editOmAnswer: answer => dispatch(actions.editOmAnswer(answer)),
+  setOmResultArr: resultArr => dispatch(actions.setOmResultArr(resultArr)),
+  setOmTestComplete: bool => dispatch(actions.setOmTestComplete(bool)),
+  setOmResultTitle: title => dispatch(actions.setOmResultTitle(title)),
 });
 
 export default connect(
