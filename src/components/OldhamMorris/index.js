@@ -156,15 +156,13 @@ class OldhamMorris extends React.Component {
             handleAnswerClick={this.handleAnswerClick}
           />
 
-          {isOmTestComplete ? (
-            <ButtonContainer>
+          <ButtonContainer>
+            {isOmTestComplete && (
               <Button type="primary" href={resultLink}>
                 Перейти к результату
               </Button>
-            </ButtonContainer>
-          ) : (
-            <p>Необходимо ответить на все вопросы для получения результата.</p>
-          )}
+            )}
+          </ButtonContainer>
         </Container>
       </React.Fragment>
     );
