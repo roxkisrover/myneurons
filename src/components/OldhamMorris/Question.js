@@ -1,19 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import { Divider } from 'antd';
 import AnswerButton from './AnswerButton';
-
-const Paragraph = styled.p`
-  margin-top: 0;
-  margin-bottom: 25px;
-`;
-
-const Divider = styled.hr`
-  margin-top: 20px;
-  margin-bottom: 25px;
-  border-width: 0;
-  border-top: 1px solid #d6d6d6;
-`;
 
 class Question extends React.Component {
   constructor(props) {
@@ -35,9 +23,10 @@ class Question extends React.Component {
     } = this.props;
     return (
       <div>
-        <Paragraph>
+        <p>
           {questionId}. {questionText}
-        </Paragraph>
+        </p>
+
         {answersData.map((answer, index) => (
           <AnswerButton
             answerIndex={index}
@@ -51,6 +40,7 @@ class Question extends React.Component {
             questionTarget={questionTarget}
           />
         ))}
+
         <Divider />
       </div>
     );

@@ -1,38 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { Button } from 'antd';
 import { connect } from 'react-redux';
 
-const Button = styled.button`
-  display: inline-block;
-  margin-right: 10px;
-  margin-bottom: 10px;
-  height: 24px;
-  padding: 0 30px;
-  color: ${props => (props.isActive ? '#fff' : '#555')};
-  text-align: center;
-  font-size: 11px;
-  font-weight: 600;
-  line-height: 24px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  text-decoration: none;
-  white-space: nowrap;
-  background-color: ${props => (props.isActive ? '#33c3f0' : 'transparent')};
-  border-radius: 4px;
-  border: ${props => (props.isActive ? '1px solid #33c3f0' : '1px solid #bbb')};
-  cursor: pointer;
-  :not(:disabled):hover {
-    color: ${props => (props.isActive ? '#fff' : '#333')};
-    border-color: ${props => (props.isActive ? '#1eaedb' : '#888')};
-    background-color: ${props => (props.isActive ? '#1eaedb' : 'transparent')};
-  }
-  :focus {
-    outline: 0;
-  }
-  :disabled {
-    color: ${props => (props.isActive ? '#eee' : '#999')};
-  }
+const ButtonWrapper = styled.span`
+  margin-right: 8px;
+  margin-bottom: 12px;
 `;
 
 const AnswerButton = ({
@@ -46,17 +20,19 @@ const AnswerButton = ({
   questionId,
   questionTarget,
 }) => (
-  <Button
-    disabled={isTestComplete}
-    isActive={isActive}
-    onClick={() => {
-      handleAnswerClick(questionId, questionTarget, answerValue);
-      handleActiveIndexChange(answerIndex);
-    }}
-    type="button"
-  >
-    {answerText}
-  </Button>
+  <ButtonWrapper>
+    <Button
+      disabled={isTestComplete}
+      type={isActive ? 'primary' : 'default'}
+      size="small"
+      onClick={() => {
+        handleAnswerClick(questionId, questionTarget, answerValue);
+        handleActiveIndexChange(answerIndex);
+      }}
+    >
+      {answerText}
+    </Button>
+  </ButtonWrapper>
 );
 
 AnswerButton.propTypes = {
