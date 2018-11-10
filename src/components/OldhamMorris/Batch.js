@@ -18,7 +18,8 @@ class Batch extends React.Component {
     this.handleButtonNextClick = this.handleButtonNextClick.bind(this);
   }
 
-  componentWillMount() {
+  // eslint-disable-next-line
+  UNSAFE_componentWillMount() {
     const { questionsData, questionsBatchLength } = this.props;
     const slicedQuestions = [];
 
