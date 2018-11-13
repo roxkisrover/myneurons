@@ -14,7 +14,7 @@ const Wrapper = styled.div`
 `;
 
 const Content = styled.div`
-  padding: 16px;
+  padding: 24px;
   max-width: 960px;
   border-radius: 10px;
   background-color: #fff;
