@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'antd';
+import { Button, Icon } from 'antd';
 
 const ButtonNext = ({ batchCount, batchIndex, handleButtonNextClick }) => (
   <Button disabled={batchCount - batchIndex <= 1} onClick={handleButtonNextClick}>
-    Дальше
+    Дальше <Icon type="right" />
   </Button>
 );
 
