@@ -140,6 +140,7 @@ class Result extends React.Component {
   render() {
     const { description } = this.state;
     const { title } = this.props;
+
     return (
       <React.Fragment>
         <Helmet>
