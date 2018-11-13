@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
@@ -20,6 +21,10 @@ import sensitive from '../../data/oldhamMorris/descriptions/sensitive.md';
 import serious from '../../data/oldhamMorris/descriptions/serious.md';
 import solitary from '../../data/oldhamMorris/descriptions/solitary.md';
 import vigilant from '../../data/oldhamMorris/descriptions/vigilant.md';
+
+const Branding = styled.span`
+  color: #ff6101;
+`;
 
 class Result extends React.Component {
   constructor(props) {
@@ -151,12 +156,14 @@ class Result extends React.Component {
           <Breadcrumb>
             <Breadcrumb.Item href="/">
               <Icon type="home" />
+              <Branding>myneurons</Branding>
             </Breadcrumb.Item>
             <Breadcrumb.Item href="/oldham-morris">
               <Icon type="form" />
               <span>Тест Олдхэма-Морриса</span>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
+              <Icon type="file" />
               <span>Результат</span>
             </Breadcrumb.Item>
           </Breadcrumb>

@@ -15,6 +15,10 @@ import Container from '../Container';
 import Batch from '../Test/Batch';
 import * as actions from '../../actions/oldhamMorris';
 
+const Branding = styled.span`
+  color: #ff6101;
+`;
+
 const ButtonContainer = styled.div`
   margin-bottom: 90px;
   text-align: center;
@@ -96,6 +100,7 @@ class OldhamMorris extends React.Component {
           <Breadcrumb>
             <Breadcrumb.Item href="/">
               <Icon type="home" />
+              <Branding>myneurons</Branding>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
               <Icon type="form" />
