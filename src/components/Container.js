@@ -7,6 +7,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: #fafafa;
   @media (min-width: 768px) {
     ${props => (props.isVerticallyCentered ? 'min-height: 100vh;' : '')};
   }
@@ -15,6 +16,8 @@ const Wrapper = styled.div`
 const Content = styled.div`
   padding: 16px;
   max-width: 960px;
+  border-radius: 10px;
+  background-color: #fff;
 `;
 
 const Container = ({ children, isVerticallyCentered }) => (
