@@ -6,6 +6,10 @@ import {
 } from 'antd';
 import Container from './Container';
 
+const Title = styled.h1`
+  color: #ff6101;
+`;
+
 const Scroll = styled.div`
   @media (min-width: 768px) {
     padding-right: 12px;
@@ -23,7 +27,7 @@ const Home = () => (
     <Container isVerticallyCentered>
       <Row gutter={24}>
         <Col md={{ span: 12 }}>
-          <h1>myneurons</h1>
+          <Title>myneurons</Title>
           <h2>Сборник научно обоснованных психологических тестов</h2>
           <p>
             Это некоммерческий проект, в котором собраны диагностические и экспериментальные методы
