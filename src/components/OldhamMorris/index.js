@@ -29,7 +29,6 @@ class OldhamMorris extends React.Component {
     super(props);
     this.state = {
       questionsCount: omQuestionsData.length,
-      questionsBatchLength: 10, // constant
       progressPercent: 0,
       resultLink: '/',
     };
@@ -84,9 +83,10 @@ class OldhamMorris extends React.Component {
 
   render() {
     const {
-      questionsCount, questionsBatchLength, progressPercent, resultLink,
+      questionsCount, progressPercent, resultLink,
     } = this.state;
     const { isOmTestComplete } = this.props;
+    const questionsBatchLength = 10;
     const questionsBatchCount = Math.ceil(questionsCount / questionsBatchLength);
     const progressIncrement = 100 / questionsBatchCount;
 
