@@ -8,7 +8,4 @@ export const getResultArr = (answers) => {
   return result;
 };
 
-export const getMaxIndex = (result) => {
-  const max = result.reduce((a, b) => Math.max(a, b));
-  return result.indexOf(max);
-};
+export const getIndexOfMaxValue = arr => arr.indexOf(Math.max(...arr));

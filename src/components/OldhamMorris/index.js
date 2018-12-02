@@ -10,7 +10,7 @@ import {
 import omQuestionsData from '../../data/oldhamMorris/questions';
 import omAnswersData from '../../data/oldhamMorris/answers';
 import omTypesData from '../../data/oldhamMorris/types';
-import { getMaxIndex, getResultArr } from '../../lib/oldhamMorris';
+import { getIndexOfMaxValue, getResultArr } from '../../lib/oldhamMorris';
 import Container from '../Container';
 import Batch from '../Test/Batch';
 import * as actions from '../../actions/oldhamMorris';
@@ -69,7 +69,7 @@ class OldhamMorris extends React.Component {
       match, omAnswers, setOmResultArr, setOmTestComplete, setOmResultTitle,
     } = this.props;
     const resultArr = getResultArr(omAnswers);
-    const maxIndex = getMaxIndex(resultArr);
+    const maxIndex = getIndexOfMaxValue(resultArr);
     const resultType = omTypesData[maxIndex];
     const resultTitle = resultType.title;
 
