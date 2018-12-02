@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import ScrollToTop from './components/ScrollToTop';
-import Home from './components/Home';
-import OldhamMorris from './components/OldhamMorris';
-import Result from './components/OldhamMorris/Result';
-import Error from './components/Error';
+import ScrollToTop from './ScrollToTop';
+import Home from './Home';
+import OldhamMorris from './OldhamMorris';
+import Result from './OldhamMorris/Result';
+import Error from './Error';
 
 const App = () => (
   <BrowserRouter>
