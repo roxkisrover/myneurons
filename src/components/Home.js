@@ -29,7 +29,7 @@ const Home = () => (
       <title>myneurons | Главная</title>
     </Helmet>
 
-    <Container isVerticallyCentered>
+    <Container isVerticallyCentered bgColored>
       <Row gutter={24}>
         <Col md={{ span: 12 }}>
           <Title>myneurons</Title>

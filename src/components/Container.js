@@ -7,9 +7,10 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #fafafa;
+  ${props => (props.colored ? 'background-color: #fafafa;' : '')};
+
   @media (min-width: 768px) {
-    ${props => (props.isVerticallyCentered ? 'min-height: 100vh;' : '')};
+    ${props => (props.centered ? 'min-height: 100vh;' : '')};
   }
 `;
 
@@ -20,18 +21,20 @@ const Content = styled.div`
   background-color: #fff;
 `;
 
-const Container = ({ children, isVerticallyCentered }) => (
-  <Wrapper isVerticallyCentered={isVerticallyCentered}>
+const Container = ({ bgColored, children, isVerticallyCentered }) => (
+  <Wrapper colored={bgColored} centered={isVerticallyCentered}>
     <Content>{children}</Content>
   </Wrapper>
 );
 
 Container.propTypes = {
+  bgColored: PropTypes.bool,
   children: PropTypes.node.isRequired,
   isVerticallyCentered: PropTypes.bool,
 };
 
 Container.defaultProps = {
+  bgColored: false,
   isVerticallyCentered: false,
 };
 

@@ -15,7 +15,7 @@ const Error = () => (
       <title>myneurons | Страница не найдена</title>
     </Helmet>
 
-    <Container>
+    <Container isVerticallyCentered>
       <Alert
         message="Код 404"
         description="Запрашиваемая страница не найдена."
