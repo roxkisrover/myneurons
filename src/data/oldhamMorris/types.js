@@ -1,5 +1,10 @@
 const omTypesData = [
   {
+    id: 0,
+    title: 'Недостаточно правдивый',
+    link: '/false',
+  },
+  {
     id: 1,
     title: 'Бдительный',
     link: '/vigilant',

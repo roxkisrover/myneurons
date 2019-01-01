@@ -69,7 +69,7 @@ class OldhamMorris extends React.Component {
     } = this.props;
     const resultArr = getResultArr(omAnswers);
     const maxIndex = getIndexOfMaxValue(resultArr);
-    const resultType = omTypesData[maxIndex];
+    const resultType = resultArr[0] > 10 ? omTypesData[0] : omTypesData[maxIndex];
     const resultTitle = resultType.title;
 
     setOmResultArr(resultArr);
