@@ -19,6 +19,10 @@ const Scroll = styled.div`
   }
 `;
 
+const TagGroup = styled.div`
+  margin-bottom: 1em;
+`;
+
 const Home = () => (
   <React.Fragment>
     <Helmet>
@@ -49,10 +53,10 @@ const Home = () => (
         <Col md={{ span: 12 }}>
           <Scroll>
             <h3>Тест Олдхэма-Морриса</h3>
-            <p>
-              <Tag>{`${omQuestionsMeta.count} вопросов`}</Tag>
-              <Tag>{`~${omQuestionsMeta.time} минут`}</Tag>
-            </p>
+            <TagGroup>
+              <Tag>{`${omQuestionsMeta.questionsCount} вопросов`}</Tag>
+              <Tag>{`~${omQuestionsMeta.estimatedTime} минут`}</Tag>
+            </TagGroup>
             <p>
               Личностный самоопросник, разработанный Дж.&nbsp;Олдхэмом и Л.&nbsp;Моррисом на
               основании критериев DSM-IV и (частично) DSM-III-R.
@@ -64,10 +68,10 @@ const Home = () => (
             <Divider dashed />
 
             <h3>Пятифакторный опросник личности TIPI-RU</h3>
-            <p>
+            <TagGroup>
               <Tag>10 вопросов</Tag>
               <Tag>~2 минуты</Tag>
-            </p>
+            </TagGroup>
             <p>
               Оценка конвергентной валидности, внутренней согласованности и тест-ретестовой
               надёжности.
