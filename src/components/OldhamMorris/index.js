@@ -7,10 +7,10 @@ import findIndex from 'lodash/findIndex';
 import {
   Breadcrumb, Icon, Tooltip, Progress, Divider, Button,
 } from 'antd';
-import { omQuestionsData } from '../../data/oldhamMorris/questions';
+import { omQuestionsData, omQuestionsMeta } from '../../data/oldhamMorris/questions';
 import omAnswersData from '../../data/oldhamMorris/answers';
 import omTypesData from '../../data/oldhamMorris/types';
-import { getIndexOfMaxValue, getResultArr } from '../../lib/oldhamMorris';
+import { getResultArr, getIndexOfMaxValue } from '../../lib/oldhamMorris';
 import Container from '../Container';
 import Batch from '../Test/Batch';
 import * as actions from '../../actions/oldhamMorris';
@@ -28,13 +28,26 @@ class OldhamMorris extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      questionsCount: omQuestionsData.length,
       progressPercent: 0,
+      questionsBatchLength: omQuestionsMeta.questionsBatchLength,
+      questionsCount: omQuestionsMeta.questionsCount,
       resultLink: '/',
+      slicedQuestions: null,
     };
     this.setProgressPercent = this.setProgressPercent.bind(this);
     this.handleAnswerClick = this.handleAnswerClick.bind(this);
     this.calculateResult = this.calculateResult.bind(this);
+  }
+
+  componentDidMount() {
+    const { questionsCount, questionsBatchLength } = this.state;
+    const slicedQuestions = [];
+
+    for (let i = 0; i < questionsCount; i += questionsBatchLength) {
+      slicedQuestions.push(omQuestionsData.slice(i, i + questionsBatchLength));
+    }
+
+    this.setState({ slicedQuestions });
   }
 
   componentDidUpdate(prevProps) {
@@ -82,9 +95,14 @@ class OldhamMorris extends React.Component {
   }
 
   render() {
-    const { questionsCount, progressPercent, resultLink } = this.state;
+    const {
+      slicedQuestions,
+      questionsCount,
+      questionsBatchLength,
+      progressPercent,
+      resultLink,
+    } = this.state;
     const { isOmTestComplete } = this.props;
-    const questionsBatchLength = 15;
     const questionsBatchCount = Math.ceil(questionsCount / questionsBatchLength);
     const progressIncrement = 100 / questionsBatchCount;
 
@@ -147,17 +165,17 @@ class OldhamMorris extends React.Component {
 
           <Divider />
 
-          <Batch
-            answersData={omAnswersData}
-            progressPercent={progressPercent}
-            progressIncrement={progressIncrement}
-            questionsData={omQuestionsData}
-            questionsBatchLength={questionsBatchLength}
-            questionsCount={questionsCount}
-            questionsBatchCount={questionsBatchCount}
-            setProgressPercent={this.setProgressPercent}
-            handleAnswerClick={this.handleAnswerClick}
-          />
+          {slicedQuestions && (
+            <Batch
+              answersData={omAnswersData}
+              handleAnswerClick={this.handleAnswerClick}
+              progressIncrement={progressIncrement}
+              progressPercent={progressPercent}
+              questionsBatchCount={questionsBatchCount}
+              setProgressPercent={this.setProgressPercent}
+              slicedQuestions={slicedQuestions}
+            />
+          )}
 
           <ButtonContainer>
             {isOmTestComplete && (
