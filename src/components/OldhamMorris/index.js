@@ -82,11 +82,9 @@ class OldhamMorris extends React.Component {
   }
 
   render() {
-    const {
-      questionsCount, progressPercent, resultLink,
-    } = this.state;
+    const { questionsCount, progressPercent, resultLink } = this.state;
     const { isOmTestComplete } = this.props;
-    const questionsBatchLength = 10;
+    const questionsBatchLength = 15;
     const questionsBatchCount = Math.ceil(questionsCount / questionsBatchLength);
     const progressIncrement = 100 / questionsBatchCount;
 
@@ -138,7 +136,7 @@ class OldhamMorris extends React.Component {
             частей, если вы согласны с одной частью, но не согласны с другой.
           </p>
           <p>
-            Отвечайте <em>«Нет, я не согласен»</em>, если утверждение совершенно ложно для вас.
+            Отвечайте <em>«Нет, я не согласен»</em>, если утверждение совершенно вам не подходит.
           </p>
 
           <Divider dashed />
