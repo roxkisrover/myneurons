@@ -1,4 +1,4 @@
-const omQuestionsData = [
+export const omQuestionsData = [
   {
     id: 1,
     target: [1, 2],
@@ -420,4 +420,7 @@ const omQuestionsData = [
   },
 ];
 
-export default omQuestionsData;
+export const omQuestionsMeta = {
+  count: omQuestionsData.length,
+  time: 20, // minutes
+};

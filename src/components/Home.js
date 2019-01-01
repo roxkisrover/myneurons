@@ -5,6 +5,7 @@ import {
   Row, Col, Divider, Button, Tag,
 } from 'antd';
 import Container from './Container';
+import { omQuestionsMeta } from '../data/oldhamMorris/questions';
 
 const Title = styled.h1`
   color: #ff6101;
@@ -49,8 +50,8 @@ const Home = () => (
           <Scroll>
             <h3>Тест Олдхэма-Морриса</h3>
             <p>
-              <Tag>107 вопросов</Tag>
-              <Tag>~20 минут</Tag>
+              <Tag>{`${omQuestionsMeta.count} вопросов`}</Tag>
+              <Tag>{`~${omQuestionsMeta.time} минут`}</Tag>
             </p>
             <p>
               Личностный самоопросник, разработанный Дж.&nbsp;Олдхэмом и Л.&nbsp;Моррисом на
@@ -70,17 +71,6 @@ const Home = () => (
             <p>
               Оценка конвергентной валидности, внутренней согласованности и тест-ретестовой
               надёжности.
-            </p>
-            <Button type="primary" size="small" href="/" disabled>
-              Начать тестирование
-            </Button>
-
-            <Divider dashed />
-
-            <h3>Тест 3</h3>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident, quibusdam?
-              Distinctio, facilis.
             </p>
             <Button type="primary" size="small" href="/" disabled>
               Начать тестирование

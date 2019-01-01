@@ -7,7 +7,7 @@ import findIndex from 'lodash/findIndex';
 import {
   Breadcrumb, Icon, Tooltip, Progress, Divider, Button,
 } from 'antd';
-import omQuestionsData from '../../data/oldhamMorris/questions';
+import { omQuestionsData } from '../../data/oldhamMorris/questions';
 import omAnswersData from '../../data/oldhamMorris/answers';
 import omTypesData from '../../data/oldhamMorris/types';
 import { getIndexOfMaxValue, getResultArr } from '../../lib/oldhamMorris';
