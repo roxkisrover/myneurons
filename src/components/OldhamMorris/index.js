@@ -216,17 +216,17 @@ OldhamMorris.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  omAnswers: state.omAnswers,
   isOmTestComplete: state.isOmTestComplete,
+  omAnswers: state.omAnswers,
   omResultArr: state.omResultArr,
 });
 
 const mapDispatchToProps = dispatch => ({
-  addOmAnswer: answer => dispatch(actions.addOmAnswer(answer)),
-  editOmAnswer: answer => dispatch(actions.editOmAnswer(answer)),
+  addOmAnswer: newAnswer => dispatch(actions.addOmAnswer(newAnswer)),
+  editOmAnswer: changedAnswer => dispatch(actions.editOmAnswer(changedAnswer)),
   setOmResultArr: resultArr => dispatch(actions.setOmResultArr(resultArr)),
-  setOmTestComplete: bool => dispatch(actions.setOmTestComplete(bool)),
   setOmResultTitle: title => dispatch(actions.setOmResultTitle(title)),
+  setOmTestComplete: bool => dispatch(actions.setOmTestComplete(bool)),
 });
 
 export default connect(
