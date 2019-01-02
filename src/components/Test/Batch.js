@@ -12,13 +12,23 @@ class Batch extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentBatchIndex: 0,
+      batchIndex: 0,
+      batchAnswers: [],
     };
+    this.batchAnswersCount = this.batchAnswersCount.bind(this);
     this.handleButtonNextClick = this.handleButtonNextClick.bind(this);
   }
 
+  batchAnswersCount(questionId) {
+    const { batchAnswers } = this.state;
+
+    if (!batchAnswers.includes(questionId)) {
+      this.setState({ batchAnswers: [...batchAnswers, questionId] });
+    }
+  }
+
   handleButtonNextClick() {
-    const { currentBatchIndex } = this.state;
+    const { batchIndex } = this.state;
     const {
       progressIncrement,
       progressPercent,
@@ -26,9 +36,10 @@ class Batch extends React.Component {
       setProgressPercent,
     } = this.props;
 
-    if (currentBatchIndex < questionsBatchCount) {
+    if (batchIndex < questionsBatchCount) {
       this.setState({
-        currentBatchIndex: currentBatchIndex + 1,
+        batchIndex: batchIndex + 1,
+        batchAnswers: [],
       });
       setProgressPercent(progressPercent + progressIncrement);
     }
@@ -37,16 +48,21 @@ class Batch extends React.Component {
   }
 
   render() {
-    const { currentBatchIndex } = this.state;
+    const { batchIndex, batchAnswers } = this.state;
     const {
-      slicedQuestions, answersData, questionsBatchCount, handleAnswerClick,
+      slicedQuestions,
+      answersData,
+      questionsBatchCount,
+      questionsBatchLength,
+      handleAnswerClick,
     } = this.props;
 
     return (
       <React.Fragment>
-        {slicedQuestions[currentBatchIndex].map(question => (
+        {slicedQuestions[batchIndex].map(question => (
           <Question
             answersData={answersData}
+            batchAnswersCount={this.batchAnswersCount}
             handleAnswerClick={handleAnswerClick}
             key={question.id}
             questionId={question.id}
@@ -55,9 +71,12 @@ class Batch extends React.Component {
           />
         ))}
 
-        {questionsBatchCount - currentBatchIndex > 1 && (
+        {questionsBatchCount - batchIndex > 1 && (
           <ButtonContainer>
-            <Button onClick={this.handleButtonNextClick}>
+            <Button
+              disabled={batchAnswers.length < questionsBatchLength}
+              onClick={this.handleButtonNextClick}
+            >
               Дальше <Icon type="right" />
             </Button>
           </ButtonContainer>
@@ -78,6 +97,7 @@ Batch.propTypes = {
   progressPercent: PropTypes.number.isRequired,
   progressIncrement: PropTypes.number.isRequired,
   questionsBatchCount: PropTypes.number.isRequired,
+  questionsBatchLength: PropTypes.number.isRequired,
   setProgressPercent: PropTypes.func.isRequired,
   slicedQuestions: PropTypes.arrayOf(
     PropTypes.arrayOf(

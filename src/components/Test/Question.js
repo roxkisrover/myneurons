@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import { Divider } from 'antd';
 import AnswerButton from './AnswerButton';
 
-class Question extends React.Component {
+class Question extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.handleActiveIndexChange = this.handleActiveIndexChange.bind(this);
     this.state = {
       activeAnswerIndex: null,
     };
+    this.handleActiveIndexChange = this.handleActiveIndexChange.bind(this);
   }
 
   handleActiveIndexChange(answerIndex) {
@@ -19,8 +19,14 @@ class Question extends React.Component {
   render() {
     const { activeAnswerIndex } = this.state;
     const {
-      answersData, handleAnswerClick, questionId, questionTarget, questionText,
+      answersData,
+      handleAnswerClick,
+      questionId,
+      questionTarget,
+      questionText,
+      batchAnswersCount,
     } = this.props;
+
     return (
       <div>
         <p>
@@ -29,9 +35,11 @@ class Question extends React.Component {
 
         {answersData.map((answer, index) => (
           <AnswerButton
+            activeAnswerIndex={activeAnswerIndex}
             answerIndex={index}
             answerText={answer.text}
             answerValue={answer.value}
+            batchAnswersCount={batchAnswersCount}
             handleActiveIndexChange={this.handleActiveIndexChange}
             handleAnswerClick={handleAnswerClick}
             isActive={index === activeAnswerIndex}
@@ -49,6 +57,7 @@ class Question extends React.Component {
 
 Question.propTypes = {
   answersData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  batchAnswersCount: PropTypes.func.isRequired,
   handleAnswerClick: PropTypes.func.isRequired,
   questionId: PropTypes.number.isRequired,
   questionTarget: PropTypes.arrayOf(PropTypes.number).isRequired,

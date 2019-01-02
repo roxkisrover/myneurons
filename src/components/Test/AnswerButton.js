@@ -12,6 +12,7 @@ const AnswerButton = ({
   answerIndex,
   answerText,
   answerValue,
+  batchAnswersCount,
   handleActiveIndexChange,
   handleAnswerClick,
   isActive,
@@ -20,11 +21,12 @@ const AnswerButton = ({
 }) => (
   <ButtonWrapper>
     <Button
-      type={isActive ? 'primary' : 'default'}
       size="small"
+      type={isActive ? 'primary' : 'default'}
       onClick={() => {
         handleAnswerClick(questionId, questionTarget, answerValue);
         handleActiveIndexChange(answerIndex);
+        batchAnswersCount(questionId);
       }}
     >
       {answerText}
@@ -36,6 +38,7 @@ AnswerButton.propTypes = {
   answerIndex: PropTypes.number.isRequired,
   answerText: PropTypes.string.isRequired,
   answerValue: PropTypes.number.isRequired,
+  batchAnswersCount: PropTypes.func.isRequired,
   handleActiveIndexChange: PropTypes.func.isRequired,
   handleAnswerClick: PropTypes.func.isRequired,
   isActive: PropTypes.bool.isRequired,

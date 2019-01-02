@@ -172,6 +172,7 @@ class OldhamMorris extends React.Component {
               progressIncrement={progressIncrement}
               progressPercent={progressPercent}
               questionsBatchCount={questionsBatchCount}
+              questionsBatchLength={questionsBatchLength}
               setProgressPercent={this.setProgressPercent}
               slicedQuestions={slicedQuestions}
             />
