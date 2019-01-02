@@ -80,9 +80,10 @@ class OldhamMorris extends React.Component {
     const {
       match, omAnswers, setOmResultArr, setOmTestComplete, setOmResultTitle,
     } = this.props;
+    const { falseLimit } = omQuestionsMeta;
     const resultArr = getResultArr(omAnswers);
     const maxIndex = getIndexOfMaxValue(resultArr);
-    const resultType = resultArr[0] > 11 ? omTypesData[0] : omTypesData[maxIndex];
+    const resultType = resultArr[0] > falseLimit ? omTypesData[0] : omTypesData[maxIndex];
     const resultTitle = resultType.title;
 
     setOmResultArr(resultArr);

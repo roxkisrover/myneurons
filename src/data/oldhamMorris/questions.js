@@ -422,6 +422,7 @@ export const omQuestionsData = [
 
 export const omQuestionsMeta = {
   estimatedTime: 20, // minutes
+  falseLimit: 11,
   questionsBatchLength: 15,
   questionsCount: omQuestionsData.length,
 };
