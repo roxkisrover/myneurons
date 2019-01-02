@@ -2,7 +2,7 @@ const omTypesData = [
   {
     id: 0,
     title: 'Недостаточно правдивый',
-    link: '/false',
+    link: '/falsified',
   },
   {
     id: 1,

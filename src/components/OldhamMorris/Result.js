@@ -17,6 +17,7 @@ import selfConfident from '../../data/oldhamMorris/descriptions/self-confident.m
 import sensitive from '../../data/oldhamMorris/descriptions/sensitive.md';
 import solitary from '../../data/oldhamMorris/descriptions/solitary.md';
 import vigilant from '../../data/oldhamMorris/descriptions/vigilant.md';
+import falsified from '../../data/oldhamMorris/descriptions/falsified.md';
 
 const Branding = styled.span`
   color: #ff6101;
@@ -104,9 +105,16 @@ class Result extends React.Component {
             this.setState({ description: text });
           });
         break;
+      case 'falsified':
+        fetch(falsified)
+          .then(response => response.text())
+          .then((text) => {
+            this.setState({ description: text });
+          });
+        break;
       default:
         // eslint-disable-next-line
-        console.log('Oldham-Morris test result: NO MATCH!!!');
+        console.log('Test result: NO MATCH!');
     }
   }
 
