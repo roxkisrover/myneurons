@@ -81,14 +81,14 @@ class OldhamMorris extends React.Component {
       match, omAnswers, setOmResultArr, setOmTestComplete, setOmResultTitle,
     } = this.props;
     const { falseLimit } = omQuestionsMeta;
-    const resultArr = getResultArr(omAnswers);
+    const resultArr = getResultArr(omAnswers, omTypesData.length);
     const maxIndex = getIndexOfMaxValue(resultArr);
     const resultType = resultArr[0] > falseLimit ? omTypesData[0] : omTypesData[maxIndex];
-    const resultTitle = resultType.title;
 
     setOmResultArr(resultArr);
-    setOmResultTitle(resultTitle);
+    setOmResultTitle(resultType.title);
     setOmTestComplete(true);
+
     this.setState({
       progressPercent: 100,
       resultLink: `${match.url}${resultType.link}`,
@@ -226,7 +226,7 @@ const mapDispatchToProps = dispatch => ({
   editOmAnswer: changedAnswer => dispatch(actions.editOmAnswer(changedAnswer)),
   setOmResultArr: resultArr => dispatch(actions.setOmResultArr(resultArr)),
   setOmResultTitle: title => dispatch(actions.setOmResultTitle(title)),
-  setOmTestComplete: bool => dispatch(actions.setOmTestComplete(bool)),
+  setOmTestComplete: isComplete => dispatch(actions.setOmTestComplete(isComplete)),
 });
 
 export default connect(

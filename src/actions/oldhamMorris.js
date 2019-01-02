@@ -21,9 +21,9 @@ export const setOmResultArr = resultArr => ({
   resultArr,
 });
 
-export const setOmTestComplete = bool => ({
+export const setOmTestComplete = isComplete => ({
   type: SET_OM_TEST_COMPLETE,
-  bool,
+  isComplete,
 });
 
 export const setOmResultTitle = title => ({

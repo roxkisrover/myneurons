@@ -19,11 +19,9 @@ export const omAnswers = (state = [], action) => {
       ];
 
     case EDIT_OM_ANSWER:
-      return state.map(
-        answer => (answer.id === action.changedAnswer.id
-          ? { ...answer, value: action.changedAnswer.value }
-          : answer),
-      );
+      return state.map(answer => (answer.id === action.changedAnswer.id
+        ? { ...answer, value: action.changedAnswer.value }
+        : answer));
 
     default:
       return state;
@@ -33,7 +31,7 @@ export const omAnswers = (state = [], action) => {
 export const omResultArr = (state = [], action) => {
   switch (action.type) {
     case SET_OM_RESULT_ARR:
-      return action.result;
+      return action;
 
     default:
       return state;
@@ -43,7 +41,7 @@ export const omResultArr = (state = [], action) => {
 export const omResultTitle = (state = 'Не определён', action) => {
   switch (action.type) {
     case SET_OM_RESULT_TITLE:
-      return action.title;
+      return action;
 
     default:
       return state;
@@ -53,7 +51,7 @@ export const omResultTitle = (state = 'Не определён', action) => {
 export const isOmTestComplete = (state = false, action) => {
   switch (action.type) {
     case SET_OM_TEST_COMPLETE:
-      return action.bool;
+      return action.isComplete;
 
     default:
       return state;
