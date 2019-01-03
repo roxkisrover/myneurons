@@ -77,7 +77,8 @@ class Batch extends React.Component {
               disabled={batchAnswers.length < questionsBatchLength}
               onClick={this.handleButtonNextClick}
             >
-              Дальше <Icon type="right" />
+              Дальше
+              <Icon type="right" />
             </Button>
           </ButtonContainer>
         )}
