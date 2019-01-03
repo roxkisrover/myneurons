@@ -8,12 +8,13 @@ import findIndex from 'lodash/findIndex';
 import {
   Breadcrumb, Icon, Tooltip, Progress, Divider,
 } from 'antd';
+import Container from '../Container';
+import Batch from '../Test/Batch';
+
 import { omQuestionsData, omQuestionsMeta } from '../../data/oldhamMorris/questions';
 import omAnswersData from '../../data/oldhamMorris/answers';
 import omTypesData from '../../data/oldhamMorris/types';
 import { getResultArr, getIndexOfMaxValue } from '../../lib/oldhamMorris';
-import Container from '../Container';
-import Batch from '../Test/Batch';
 import * as actions from '../../actions/oldhamMorris';
 
 const Branding = styled.span`
