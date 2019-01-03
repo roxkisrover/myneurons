@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import findIndex from 'lodash/findIndex';
 import {
-  Breadcrumb, Icon, Tooltip, Progress, Divider, Button,
+  Breadcrumb, Icon, Tooltip, Progress, Divider,
 } from 'antd';
 import { omQuestionsData, omQuestionsMeta } from '../../data/oldhamMorris/questions';
 import omAnswersData from '../../data/oldhamMorris/answers';
@@ -181,9 +182,9 @@ class OldhamMorris extends React.Component {
 
           <ButtonContainer>
             {isOmTestComplete && (
-              <Button type="primary" href={resultLink}>
+              <Link className="ant-btn ant-btn-primary" to={resultLink}>
                 Перейти к результату
-              </Button>
+              </Link>
             )}
           </ButtonContainer>
         </Container>

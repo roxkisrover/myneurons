@@ -161,7 +161,7 @@ Result.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  title: state.omResultTitle,
+  title: state.omResultTitle.title,
 });
 
 export default connect(mapStateToProps)(Result);
