@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Divider } from 'antd';
 import AnswerButton from './AnswerButton';
 
-class Question extends React.PureComponent {
+class Question extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
