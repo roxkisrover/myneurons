@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Button } from 'antd';
 
 const ButtonWrapper = styled.span`
+  display: inline-block;
   margin-right: 8px;
   margin-bottom: 12px;
 `;
