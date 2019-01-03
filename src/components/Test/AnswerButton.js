@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Button } from 'antd';
 
-const ButtonWrapper = styled.span`
+const Wrapper = styled.span`
   display: inline-block;
   margin-right: 8px;
   margin-bottom: 12px;
@@ -20,7 +20,7 @@ const AnswerButton = ({
   questionId,
   questionTarget,
 }) => (
-  <ButtonWrapper>
+  <Wrapper>
     <Button
       size="small"
       type={isActive ? 'primary' : 'default'}
@@ -32,7 +32,7 @@ const AnswerButton = ({
     >
       {answerText}
     </Button>
-  </ButtonWrapper>
+  </Wrapper>
 );
 
 AnswerButton.propTypes = {
