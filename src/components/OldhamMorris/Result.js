@@ -146,7 +146,7 @@ class Result extends React.Component {
 
           <Divider />
 
-          <h1>{title}</h1>
+          <h1>{title} тип личности</h1>
 
           <ReactMarkdown source={description} />
         </Container>
