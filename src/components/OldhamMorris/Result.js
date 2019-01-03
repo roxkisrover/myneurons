@@ -146,7 +146,7 @@ class Result extends React.Component {
 
           <Divider />
 
-          <h1>{title} тип личности</h1>
+          {title && <h1>{title} тип личности</h1>}
 
           <ReactMarkdown source={description} />
         </Container>
@@ -156,8 +156,12 @@ class Result extends React.Component {
 }
 
 Result.propTypes = {
-  title: PropTypes.string.isRequired,
   match: PropTypes.shape().isRequired,
+  title: PropTypes.string,
+};
+
+Result.defaultProps = {
+  title: '',
 };
 
 const mapStateToProps = state => ({
