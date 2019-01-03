@@ -38,7 +38,7 @@ export const omResultArr = (state = [], action) => {
   }
 };
 
-export const omResultTitle = (state = 'Не определён', action) => {
+export const omResultTitle = (state = 'Неопределённый', action) => {
   switch (action.type) {
     case SET_OM_RESULT_TITLE:
       return action;
