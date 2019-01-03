@@ -58,31 +58,33 @@ class Batch extends React.Component {
     } = this.props;
 
     return (
-      <React.Fragment>
-        {slicedQuestions[batchIndex].map(question => (
-          <Question
-            answersData={answersData}
-            batchAnswersCount={this.batchAnswersCount}
-            handleAnswerClick={handleAnswerClick}
-            key={question.id}
-            questionId={question.id}
-            questionTarget={question.target}
-            questionText={question.text}
-          />
-        ))}
+      <React.StrictMode>
+        <React.Fragment>
+          {slicedQuestions[batchIndex].map(question => (
+            <Question
+              answersData={answersData}
+              batchAnswersCount={this.batchAnswersCount}
+              handleAnswerClick={handleAnswerClick}
+              key={question.id}
+              questionId={question.id}
+              questionTarget={question.target}
+              questionText={question.text}
+            />
+          ))}
 
-        {questionsBatchCount - batchIndex > 1 && (
-          <ButtonContainer>
-            <Button
-              disabled={batchAnswers.length < questionsBatchLength}
-              onClick={this.handleButtonNextClick}
-            >
-              Дальше
-              <Icon type="right" />
-            </Button>
-          </ButtonContainer>
-        )}
-      </React.Fragment>
+          {questionsBatchCount - batchIndex > 1 && (
+            <ButtonContainer>
+              <Button
+                disabled={batchAnswers.length < questionsBatchLength}
+                onClick={this.handleButtonNextClick}
+              >
+                Дальше
+                <Icon type="right" />
+              </Button>
+            </ButtonContainer>
+          )}
+        </React.Fragment>
+      </React.StrictMode>
     );
   }
 }
