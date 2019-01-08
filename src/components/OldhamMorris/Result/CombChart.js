@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Highcharts from 'highcharts';
 import {
   Chart,
@@ -12,15 +13,19 @@ import {
 
 import omTypesData from '../../../data/oldhamMorris/types';
 
-const CombChart = () => (
+const CombChart = ({ data }) => (
   <HighchartsChart>
     <Chart />
     <Legend />
-    <XAxis categories={omTypesData.map(item => item.title)} />
+    <XAxis categories={omTypesData.map(item => item.chartName)} />
     <YAxis>
-      <ColumnSeries name="Result" data={[2, 3, 2, 9, 3, 4, 3, 8, 1, 3, 4]} showInLegend={false} />
+      <ColumnSeries name="Result" data={data} showInLegend={false} />
     </YAxis>
   </HighchartsChart>
 );
+
+CombChart.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.number).isRequired,
+};
 
 export default withHighcharts(CombChart, Highcharts);

@@ -125,7 +125,7 @@ class Result extends React.Component {
 
   render() {
     const { description } = this.state;
-    const { title } = this.props;
+    const { title, score } = this.props;
 
     return (
       <React.Fragment>
@@ -153,7 +153,7 @@ class Result extends React.Component {
 
           {title && <Title>{`${title} тип личности`}</Title>}
 
-          <CombChart />
+          {score && <CombChart data={score} />}
 
           <ReactMarkdown source={description} />
         </Container>
@@ -164,12 +164,12 @@ class Result extends React.Component {
 
 Result.propTypes = {
   match: PropTypes.shape().isRequired,
-  // score: PropTypes.arrayOf(PropTypes.number),
+  score: PropTypes.arrayOf(PropTypes.number),
   title: PropTypes.string,
 };
 
 Result.defaultProps = {
-  // score: null,
+  score: null,
   title: '',
 };
 
