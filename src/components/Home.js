@@ -53,7 +53,7 @@ const Home = () => (
 
         <Col md={{ span: 12 }}>
           <Scroll>
-            <h3>Тест Олдхэма-Морриса</h3>
+            <h3>Модифицированный тест Олдхэма-Морриса</h3>
             <TagGroup>
               <Tag>{`${omQuestionsMeta.questionsCount} вопросов`}</Tag>
               <Tag>{`~${omQuestionsMeta.estimatedTime} минут`}</Tag>

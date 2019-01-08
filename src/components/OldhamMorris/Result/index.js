@@ -164,17 +164,17 @@ class Result extends React.Component {
 
 Result.propTypes = {
   match: PropTypes.shape().isRequired,
-  // resultArr: PropTypes.arrayOf(PropTypes.number),
+  // score: PropTypes.arrayOf(PropTypes.number),
   title: PropTypes.string,
 };
 
 Result.defaultProps = {
-  // resultArr: null,
+  // score: null,
   title: '',
 };
 
 const mapStateToProps = state => ({
-  resultArr: state.omResultArr.resultArr,
+  score: state.omScore.score,
   title: state.omResultTitle.title,
 });
 

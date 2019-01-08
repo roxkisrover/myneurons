@@ -14,7 +14,7 @@ import Batch from '../Test/Batch';
 import { omQuestionsData, omQuestionsMeta } from '../../data/oldhamMorris/questions';
 import omAnswersData from '../../data/oldhamMorris/answers';
 import omTypesData from '../../data/oldhamMorris/types';
-import { getResultArr, getIndexOfMaxValue } from '../../lib/oldhamMorris';
+import { getScore, getIndexOfMaxValue } from '../../lib/oldhamMorris';
 import * as actions from '../../actions/oldhamMorris';
 
 const Branding = styled.span`
@@ -80,14 +80,14 @@ class OldhamMorris extends React.Component {
 
   calculateResult() {
     const {
-      match, omAnswers, setOmResultArr, setOmTestComplete, setOmResultTitle,
+      match, omAnswers, setOmScore, setOmTestComplete, setOmResultTitle,
     } = this.props;
     const { falseLimit } = omQuestionsMeta;
-    const resultArr = getResultArr(omAnswers, omTypesData.length);
-    const maxIndex = getIndexOfMaxValue(resultArr);
-    const resultType = resultArr[0] > falseLimit ? omTypesData[0] : omTypesData[maxIndex];
+    const score = getScore(omAnswers, omTypesData.length);
+    const maxIndex = getIndexOfMaxValue(score);
+    const resultType = score[0] > falseLimit ? omTypesData[0] : omTypesData[maxIndex];
 
-    setOmResultArr(resultArr);
+    setOmScore(score);
     setOmResultTitle(resultType.title);
     setOmTestComplete(true);
 
@@ -206,7 +206,7 @@ OldhamMorris.propTypes = {
   match: PropTypes.shape({ url: PropTypes.string }).isRequired,
   addOmAnswer: PropTypes.func.isRequired,
   editOmAnswer: PropTypes.func.isRequired,
-  setOmResultArr: PropTypes.func.isRequired,
+  setOmScore: PropTypes.func.isRequired,
   setOmTestComplete: PropTypes.func.isRequired,
   setOmResultTitle: PropTypes.func.isRequired,
 };
@@ -218,13 +218,13 @@ OldhamMorris.defaultProps = {
 const mapStateToProps = state => ({
   isOmTestComplete: state.isOmTestComplete,
   omAnswers: state.omAnswers,
-  omResultArr: state.omResultArr,
+  OmScore: state.OmScore,
 });
 
 const mapDispatchToProps = dispatch => ({
   addOmAnswer: newAnswer => dispatch(actions.addOmAnswer(newAnswer)),
   editOmAnswer: changedAnswer => dispatch(actions.editOmAnswer(changedAnswer)),
-  setOmResultArr: resultArr => dispatch(actions.setOmResultArr(resultArr)),
+  setOmScore: score => dispatch(actions.setOmScore(score)),
   setOmResultTitle: title => dispatch(actions.setOmResultTitle(title)),
   setOmTestComplete: isComplete => dispatch(actions.setOmTestComplete(isComplete)),
 });

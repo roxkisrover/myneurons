@@ -1,7 +1,7 @@
 import {
   ADD_OM_ANSWER,
   EDIT_OM_ANSWER,
-  SET_OM_RESULT_ARR,
+  SET_OM_SCORE,
   SET_OM_TEST_COMPLETE,
   SET_OM_RESULT_TITLE,
 } from '../data/constants';
@@ -16,9 +16,9 @@ export const editOmAnswer = changedAnswer => ({
   changedAnswer,
 });
 
-export const setOmResultArr = resultArr => ({
-  type: SET_OM_RESULT_ARR,
-  resultArr,
+export const setOmScore = score => ({
+  type: SET_OM_SCORE,
+  score,
 });
 
 export const setOmTestComplete = isComplete => ({

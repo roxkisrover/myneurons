@@ -1,9 +1,9 @@
 import {
   ADD_OM_ANSWER,
   EDIT_OM_ANSWER,
-  SET_OM_RESULT_ARR,
-  SET_OM_TEST_COMPLETE,
   SET_OM_RESULT_TITLE,
+  SET_OM_SCORE,
+  SET_OM_TEST_COMPLETE,
 } from '../data/constants';
 
 export const omAnswers = (state = [], action) => {
@@ -28,9 +28,9 @@ export const omAnswers = (state = [], action) => {
   }
 };
 
-export const omResultArr = (state = [], action) => {
+export const omScore = (state = [], action) => {
   switch (action.type) {
-    case SET_OM_RESULT_ARR:
+    case SET_OM_SCORE:
       return action;
 
     default:

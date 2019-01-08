@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 import {
-  omAnswers, omResultArr, omResultTitle, isOmTestComplete,
+  omAnswers, omScore, omResultTitle, isOmTestComplete,
 } from './oldhamMorris';
 
 export default combineReducers({
   omAnswers,
-  omResultArr,
+  omScore,
   omResultTitle,
   isOmTestComplete,
 });
