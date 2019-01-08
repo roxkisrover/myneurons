@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
 import { Breadcrumb, Icon, Divider } from 'antd';
 import Container from '../../Container';
+import CombChart from './CombChart';
 
 import adventurous from './descriptions/adventurous.md';
 import conscientious from './descriptions/conscientious.md';
@@ -152,6 +153,7 @@ class Result extends React.Component {
 
           {title && <Title>{`${title} тип личности`}</Title>}
 
+          <CombChart />
 
           <ReactMarkdown source={description} />
         </Container>
