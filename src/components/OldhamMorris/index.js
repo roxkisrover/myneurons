@@ -197,15 +197,13 @@ class OldhamMorris extends React.Component {
 OldhamMorris.propTypes = {
   omAnswers: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      target: PropTypes.arrayOf(PropTypes.number).isRequired,
-      value: PropTypes.number.isRequired,
-    }).isRequired,
+      id: PropTypes.number,
+      target: PropTypes.arrayOf(PropTypes.number),
+      value: PropTypes.number,
+    }),
   ).isRequired,
   isOmTestComplete: PropTypes.bool,
-  match: PropTypes.shape({
-    url: PropTypes.string.isRequired,
-  }).isRequired,
+  match: PropTypes.shape({ url: PropTypes.string }).isRequired,
   addOmAnswer: PropTypes.func.isRequired,
   editOmAnswer: PropTypes.func.isRequired,
   setOmResultArr: PropTypes.func.isRequired,

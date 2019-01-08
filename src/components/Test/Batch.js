@@ -90,10 +90,10 @@ class Batch extends React.Component {
 Batch.propTypes = {
   answersData: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      value: PropTypes.number.isRequired,
-      text: PropTypes.string.isRequired,
-    }).isRequired,
+      id: PropTypes.number,
+      value: PropTypes.number,
+      text: PropTypes.string,
+    }),
   ).isRequired,
   progressPercent: PropTypes.number.isRequired,
   progressIncrement: PropTypes.number.isRequired,
@@ -103,11 +103,11 @@ Batch.propTypes = {
   slicedQuestions: PropTypes.arrayOf(
     PropTypes.arrayOf(
       PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        target: PropTypes.arrayOf(PropTypes.number).isRequired,
-        text: PropTypes.string.isRequired,
-      }).isRequired,
-    ).isRequired,
+        id: PropTypes.number,
+        target: PropTypes.arrayOf(PropTypes.number),
+        text: PropTypes.string,
+      }),
+    ),
   ).isRequired,
   handleAnswerClick: PropTypes.func.isRequired,
 };
