@@ -421,7 +421,7 @@ export const omQuestionsData = [
 ];
 
 export const omQuestionsMeta = {
-  estimatedTime: 15, // minutes
+  estimatedTime: 15, // in minutes
   falseLimit: 11,
   questionsBatchLength: 15,
   questionsCount: omQuestionsData.length,

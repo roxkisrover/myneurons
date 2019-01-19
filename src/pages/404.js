@@ -1,19 +1,12 @@
 import React from 'react';
-import styled from 'styled-components';
-import { Helmet } from 'react-helmet';
-import { Link } from 'react-router-dom';
+import { Link } from 'gatsby';
 import { Alert, Divider } from 'antd';
-import Container from './Container';
-
-const LinkWrapper = styled.div`
-  text-align: center;
-`;
+import Container from '../components/Container';
+import SEO from '../components/SEO';
 
 const Error = () => (
   <React.Fragment>
-    <Helmet>
-      <title>myneurons | Страница не найдена</title>
-    </Helmet>
+    <SEO title="404: Страница не найдена" />
 
     <Container bgColored isVerticallyCentered>
       <Alert
@@ -23,9 +16,9 @@ const Error = () => (
         showIcon
       />
       <Divider dashed />
-      <LinkWrapper>
+      <div style={{ textAlign: 'center' }}>
         <Link to="/">Вернуться на главную</Link>
-      </LinkWrapper>
+      </div>
     </Container>
   </React.Fragment>
 );

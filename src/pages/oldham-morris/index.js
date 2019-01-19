@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { Helmet } from 'react-helmet';
+import { Link } from 'gatsby';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import findIndex from 'lodash/findIndex';
+import update from 'immutability-helper';
 import {
-  Breadcrumb, Icon, Tooltip, Progress, Divider,
+  Breadcrumb, Icon, Tooltip, Progress, Divider, Collapse,
 } from 'antd';
-import Container from '../Container';
-import Batch from '../Test/Batch';
+import SEO from '../../components/SEO';
+import Container from '../../components/Container';
+import Batch from '../../components/Test/Batch';
 
 import { omQuestionsData, omQuestionsMeta } from '../../data/oldhamMorris/questions';
 import omAnswersData from '../../data/oldhamMorris/answers';
@@ -17,23 +17,15 @@ import omTypesData from '../../data/oldhamMorris/types';
 import { getScore, getIndexOfMaxValue } from '../../lib/oldhamMorris';
 import * as actions from '../../actions/oldhamMorris';
 
-const Branding = styled.span`
-  color: #ff6101;
-`;
-
-const ButtonContainer = styled.div`
-  margin-bottom: 90px;
-  text-align: center;
-`;
-
 class OldhamMorris extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      answers: [],
       progressPercent: 0,
       questionsBatchLength: omQuestionsMeta.questionsBatchLength,
       questionsCount: omQuestionsMeta.questionsCount,
-      resultLink: '/',
+      resultSlug: '/',
       slicedQuestions: null,
     };
     this.setProgressPercent = this.setProgressPercent.bind(this);
@@ -48,15 +40,13 @@ class OldhamMorris extends React.Component {
     for (let i = 0; i < questionsCount; i += questionsBatchLength) {
       slicedQuestions.push(omQuestionsData.slice(i, i + questionsBatchLength));
     }
-
     this.setState({ slicedQuestions });
   }
 
-  componentDidUpdate(prevProps) {
-    const { questionsCount } = this.state;
-    const { omAnswers } = this.props;
+  componentDidUpdate(prevProps, prevState) {
+    const { answers, questionsCount } = this.state;
 
-    if (omAnswers !== prevProps.omAnswers && omAnswers.length === questionsCount) {
+    if (answers !== prevState.answers && answers.length === questionsCount) {
       this.calculateResult();
     }
   }
@@ -66,34 +56,33 @@ class OldhamMorris extends React.Component {
   }
 
   handleAnswerClick(questionId, questionTarget, answerValue) {
-    const { omAnswers, addOmAnswer, editOmAnswer } = this.props;
-    const answerIndex = findIndex(omAnswers, ['id', questionId]);
+    const { answers } = this.state;
+    const answerIndex = findIndex(answers, ['id', questionId]);
 
     if (answerIndex >= 0) {
-      if (answerValue !== omAnswers[answerIndex].value) {
-        editOmAnswer({ id: questionId, value: answerValue });
-      }
+      const updatedAnswers = update(answers, { [answerIndex]: { value: { $set: answerValue } } });
+      this.setState({ answers: updatedAnswers });
     } else {
-      addOmAnswer({ id: questionId, target: questionTarget, value: answerValue });
+      this.setState({
+        answers: [...answers, { id: questionId, target: questionTarget, value: answerValue }],
+      });
     }
   }
 
   calculateResult() {
-    const {
-      match, omAnswers, setOmScore, setOmTestComplete, setOmResultTitle,
-    } = this.props;
+    const { answers } = this.state;
+    const { setOmScore, setOmTestComplete } = this.props;
     const { falseLimit } = omQuestionsMeta;
-    const score = getScore(omAnswers, omTypesData.length);
+    const score = getScore(answers, omTypesData.length);
     const maxIndex = getIndexOfMaxValue(score);
     const resultType = score[0] > falseLimit ? omTypesData[0] : omTypesData[maxIndex];
 
     setOmScore(score);
-    setOmResultTitle(resultType.title);
     setOmTestComplete(true);
 
     this.setState({
       progressPercent: 100,
-      resultLink: `${match.url}${resultType.link}`,
+      resultSlug: resultType.slug,
     });
   }
 
@@ -103,7 +92,7 @@ class OldhamMorris extends React.Component {
       questionsCount,
       questionsBatchLength,
       progressPercent,
-      resultLink,
+      resultSlug,
     } = this.state;
     const { isOmTestComplete } = this.props;
     const questionsBatchCount = Math.ceil(questionsCount / questionsBatchLength);
@@ -111,15 +100,13 @@ class OldhamMorris extends React.Component {
 
     return (
       <React.Fragment>
-        <Helmet>
-          <title>myneurons | Тест Олдхэма-Морриса</title>
-        </Helmet>
+        <SEO title="Тест Олдхэма-Морриса" />
 
         <Container>
           <Breadcrumb>
             <Breadcrumb.Item href="/">
               <Icon type="home" />
-              <Branding>myneurons</Branding>
+              <span style={{ color: '#ff6101' }}>myneurons</span>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
               <Icon type="form" />
@@ -134,33 +121,38 @@ class OldhamMorris extends React.Component {
             Ваша личность уникальна. Используйте этот тест для определения своего преобладающего
             типа.
           </h3>
-          <Divider dashed />
-          <p>
-            Тест содержит <strong>{questionsCount} вопросов</strong>, на которые нужно ответить,
-            хорошенько обдумывая каждый. Постарайтесь сделать это максимально точно и честно. Ваш
-            автопортрет будет настолько же точным, насколько правдивыми будут ответы. Даже если вы
-            считаете, что вопрос не касается вас или вашей личной жизни, отвечайте так, как если бы
-            он имел к вам отношение.
-          </p>
-          <p>
-            Некоторые вопросы могут показаться слишком личными, – помните, что ответы на каждый
-            отдельный вопрос нигде не сохраняются, и никто (даже вы сами) не сможет их увидеть по
-            окончании теста.
-          </p>
-          <p>
-            Отвечайте <em>«Да, я согласен»</em>, если утверждение совершенно верно для вас в
-            большинстве случаев.
-          </p>
-          <p>
-            Отвечайте <em>«Может быть, я согласен»</em>, если утверждение иногда, в каких-то случаях
-            верно для вас. Также используйте этот ответ для утверждений, состоящих из нескольких
-            частей, если вы согласны с одной частью, но не согласны с другой.
-          </p>
-          <p>
-            Отвечайте <em>«Нет, я не согласен»</em>, если утверждение совершенно вам не подходит.
-          </p>
 
-          <Divider dashed />
+          <Collapse defaultActiveKey={['1']}>
+            <Collapse.Panel header="Описание" key="1">
+              <p>
+                Тест содержит <strong>{questionsCount} вопросов</strong>, на которые нужно ответить,
+                хорошенько обдумывая каждый. Постарайтесь сделать это максимально точно и честно.
+                Ваш автопортрет будет настолько же точным, насколько правдивыми будут ответы. Даже
+                если вы считаете, что вопрос не касается вас или вашей личной жизни, отвечайте так,
+                как если бы он имел к вам отношение.
+              </p>
+              <p>
+                Некоторые вопросы могут показаться слишком личными, – помните, что ответы на каждый
+                отдельный вопрос нигде не сохраняются, и никто (даже вы сами) не сможет их увидеть
+                по окончании теста.
+              </p>
+              <p>
+                Отвечайте <em>«Да, я согласен»</em>, если утверждение совершенно верно для вас в
+                большинстве случаев.
+              </p>
+              <p>
+                Отвечайте <em>«Может быть, я согласен»</em>, если утверждение иногда, в каких-то
+                случаях верно для вас. Также используйте этот ответ для утверждений, состоящих из
+                нескольких частей, если вы согласны с одной частью, но не согласны с другой.
+              </p>
+              <p>
+                Отвечайте <em>«Нет, я не согласен»</em>, если утверждение совершенно вам не
+                подходит.
+              </p>
+            </Collapse.Panel>
+          </Collapse>
+
+          <Divider />
 
           <Tooltip title={`Прогресс выполнения: ${Math.floor(progressPercent)}%`}>
             <Progress id="progress" percent={progressPercent} showInfo={false} />
@@ -181,13 +173,13 @@ class OldhamMorris extends React.Component {
             />
           )}
 
-          <ButtonContainer>
+          <div style={{ marginBottom: '90px', textAlign: 'center' }}>
             {isOmTestComplete && (
-              <Link className="ant-btn ant-btn-primary" to={resultLink}>
+              <Link className="ant-btn ant-btn-primary" to={`/oldham-morris/types/${resultSlug}`}>
                 Перейти к результату
               </Link>
             )}
-          </ButtonContainer>
+          </div>
         </Container>
       </React.Fragment>
     );
@@ -195,20 +187,9 @@ class OldhamMorris extends React.Component {
 }
 
 OldhamMorris.propTypes = {
-  omAnswers: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      target: PropTypes.arrayOf(PropTypes.number),
-      value: PropTypes.number,
-    }),
-  ).isRequired,
   isOmTestComplete: PropTypes.bool,
-  match: PropTypes.shape({ url: PropTypes.string }).isRequired,
-  addOmAnswer: PropTypes.func.isRequired,
-  editOmAnswer: PropTypes.func.isRequired,
   setOmScore: PropTypes.func.isRequired,
   setOmTestComplete: PropTypes.func.isRequired,
-  setOmResultTitle: PropTypes.func.isRequired,
 };
 
 OldhamMorris.defaultProps = {
@@ -222,10 +203,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addOmAnswer: newAnswer => dispatch(actions.addOmAnswer(newAnswer)),
-  editOmAnswer: changedAnswer => dispatch(actions.editOmAnswer(changedAnswer)),
   setOmScore: score => dispatch(actions.setOmScore(score)),
-  setOmResultTitle: title => dispatch(actions.setOmResultTitle(title)),
   setOmTestComplete: isComplete => dispatch(actions.setOmTestComplete(isComplete)),
 });
 

@@ -1,13 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import { Button } from 'antd';
-
-const Wrapper = styled.span`
-  display: inline-block;
-  margin-right: 8px;
-  margin-bottom: 12px;
-`;
 
 const AnswerButton = ({
   answerIndex,
@@ -20,7 +13,7 @@ const AnswerButton = ({
   questionId,
   questionTarget,
 }) => (
-  <Wrapper>
+  <div style={{ display: 'inline-block', marginRight: '8px', marginBottom: '12px' }}>
     <Button
       size="small"
       type={isActive ? 'primary' : 'default'}
@@ -32,7 +25,7 @@ const AnswerButton = ({
     >
       {answerText}
     </Button>
-  </Wrapper>
+  </div>
 );
 
 AnswerButton.propTypes = {
