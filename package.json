@@ -26,7 +26,6 @@
     "highcharts": "^7.0.2",
     "immutability-helper": "^2.9.0",
     "less": "^3.9.0",
-    "lodash": "^4.17.11",
     "prop-types": "^15.6.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",

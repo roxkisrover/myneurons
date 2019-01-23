@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'gatsby';
 import { connect } from 'react-redux';
-import findIndex from 'lodash/findIndex';
 import update from 'immutability-helper';
 import {
   Breadcrumb, Icon, Tooltip, Progress, Divider, Collapse,
@@ -57,7 +56,7 @@ class OldhamMorris extends React.Component {
 
   handleAnswerClick(questionId, questionTarget, answerValue) {
     const { answers } = this.state;
-    const answerIndex = findIndex(answers, ['id', questionId]);
+    const answerIndex = answers.findIndex(answer => answer.id === questionId.id);
 
     if (answerIndex >= 0) {
       const updatedAnswers = update(answers, { [answerIndex]: { value: { $set: answerValue } } });
