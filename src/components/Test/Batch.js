@@ -1,12 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import { Button, Icon } from 'antd';
 import Question from './Question';
-
-const ButtonContainer = styled.div`
-  text-align: right;
-`;
 
 class Batch extends React.Component {
   constructor(props) {
@@ -72,7 +67,7 @@ class Batch extends React.Component {
         ))}
 
         {questionsBatchCount - batchIndex > 1 && (
-          <ButtonContainer>
+          <div style={{ textAlign: 'right' }}>
             <Button
               disabled={batchAnswers.length < questionsBatchLength}
               onClick={this.handleButtonNextClick}
@@ -80,7 +75,7 @@ class Batch extends React.Component {
               Дальше
               <Icon type="right" />
             </Button>
-          </ButtonContainer>
+          </div>
         )}
       </React.Fragment>
     );

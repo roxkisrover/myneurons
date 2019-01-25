@@ -11,7 +11,7 @@ import {
   YAxis,
 } from 'react-jsx-highcharts';
 
-import omTypesData from '../../../data/oldhamMorris/types';
+import omTypesData from '../data/oldhamMorris/types';
 
 const CombChart = ({ data }) => (
   <HighchartsChart>

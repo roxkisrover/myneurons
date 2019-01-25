@@ -1,15 +1,8 @@
 # myneurons
 
-Carefully selected psychological tests in the form of a web application.
+> Carefully selected science-based psychological tests in the form of a web application.
 
-> Content language: 🇷🇺 RUS
-
-### This project is built with:
-
-- [React](https://github.com/facebook/react)
-- [Redux](https://github.com/reduxjs/redux)
-- [Ant Design](https://github.com/ant-design/ant-design)
-- [Styled-Components](https://github.com/styled-components/styled-components)
+Content language: 🇷🇺 RUS
 
 ### License
 
