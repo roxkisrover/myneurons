@@ -4,7 +4,7 @@ export const omScore = (state, action) => {
             return action;
 
         default:
-            return state;
+            return state || [];
     }
 };
 
@@ -14,6 +14,6 @@ export const isOmTestComplete = (state, action) => {
             return action.isComplete;
 
         default:
-            return state;
+            return state || false;
     }
 };
