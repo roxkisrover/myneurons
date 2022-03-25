@@ -6,7 +6,7 @@ const middleware = [];
 const logger = createLogger({ collapsed: true });
 
 if (process.env.ENVIRONMENT !== 'production') {
-  middleware.push(logger);
+    middleware.push(logger);
 }
 
 const createStore = () => reduxCreateStore(rootReducer, applyMiddleware(...middleware));
